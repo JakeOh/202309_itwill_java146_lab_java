@@ -14,17 +14,39 @@ public class ConditionMain03 {
         int java = sc.nextInt();
         
         // SQL 과목의 점수를 입력 받고 변수에 저장.
+        System.out.println("SQL 과목 점수 입력>>>");
+        int sql = sc.nextInt();
+        
         // JavaScript 과목의 점수를 입력 받고 변수에 저장.
+        System.out.println("JavaScript 과목 점수 입력>>>");
+        int js = sc.nextInt();
         
         // 세 과목(Java, SQL, JavaScript)의 점수를 출력.
         System.out.println("Java 점수: " + java);
+        System.out.println("SQL 점수: " + sql);
+        System.out.println("JavaScript 점수: " + js);
         
         // 세 과목의 총점을 계산해서 출력.
+        int sum = java + sql + js;
+        System.out.println("총점: " + sum);
+        
         // 세 과목의 평균을 계산해서 출력, 평균값은 소수점 계산이 되어야 함.
+        double mean = (double) sum / 3;
+        System.out.println("평균: " + mean);
+        
         // 세 과목의 평균이 90점 이상이면, "A"
         // 세 과목의 평균이 80점 이상이면, "B"
         // 세 과목의 평균이 70점 이상이면, "C"
         // 그 이외에는 "F"라고 출력.
+        if (mean >= 90) {
+            System.out.println("A");
+        } else if (mean >= 80) {
+            System.out.println("B");
+        } else if (mean >= 70) {
+            System.out.println("C");
+        } else {
+            System.out.println("F");
+        }
     }
 
 }
