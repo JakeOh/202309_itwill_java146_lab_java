@@ -47,6 +47,8 @@ public class ConditionMain03 {
         } else {
             System.out.println("F");
         }
+    
+        sc.close();
     }
 
 }
