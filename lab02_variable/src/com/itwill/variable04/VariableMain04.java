@@ -4,7 +4,7 @@ public class VariableMain04 {
 
     public static void main(String[] args) {
         // 자바 기본 데이터 타입:
-        //byte a = 128;  //-> byte 타입의 정수는 -128 ~ 127 범위의 정수만 저장 가능.
+        byte a = 127;  //-> byte 타입의 정수는 -128 ~ 127 범위의 정수만 저장 가능.
         //short b = -32_769;  //-> short 타입의 정수는 -32,768 ~ 32,767 범위의 정수만 저장 가능.
         //int c = 10_000_000_000;
         long d = 10_000_000_000L;
@@ -18,7 +18,7 @@ public class VariableMain04 {
         // 1. 변수는 같은 타입의 값만 저장할 수 있음.
         // 2. 큰 범위의 타입에는 작은 범위 타입의 값을 저장할 수 있음.
         // 3. 작은 범위 타입에 큰 범위의 값을 저장하려고 하면 에러.
-        // 4. 정수 리터럴(상수)은 범위만 넘지 않으면 byte, short, char에 저장 가능.
+        // 4. 정수 "리터럴(상수)"만 범위를 넘지 않으면 byte, short, char에 저장 가능.
         
         // char 타입: 문자 1개의 유니코드(unicode)값(정수)을 저장하는 타입.
         // 자바는 문자열(String)은 큰따옴표("), 문자(character)는 작은따옴표(')를 사용!
@@ -29,6 +29,20 @@ public class VariableMain04 {
         char ch2 = 98;
         System.out.println(ch2); //-> b
         
+        short s1 = 10; // 10은 int 리터럴 - (범위만 넘지 않으면) byte, short, 또는 char 타입에 저장 가능.
+        short s2 = 1;
+        // short s3 = s1 + s2;
+        // -> 변수 또는 변수가 포함된 연산식인 경우에는 작은 타입에 저장할 수 없음.
+        // 강제 타입 변환(casting)을 하면 허용.
+        short s3 = (short) (s1 + s2);
+        
+        char newChar = (char) (ch1 + 1);
+        System.out.println(newChar);
+
+        byte b1 = 127;
+        byte b2 = 1;
+        byte add = (byte) (b1 + b2);
+        System.out.println(add);
     }
 
 }
