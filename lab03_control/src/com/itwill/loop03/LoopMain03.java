@@ -3,6 +3,11 @@ package com.itwill.loop03;
 public class LoopMain03 {
 
     public static void main(String[] args) {
+        // 지역 변수(local variable): 메서드 안에서 선언하는 변수.
+        // 지역 변수 사용 범위:
+        // 지역 변수는 선언된 위치에서부터 변수가 포함된 "블록({ ... })" 안에서만 사용 가능!
+        // 블록이 끝나면 지역 변수는 메모리에서 자동으로 지워짐.
+        
         /* Ex1. 아래와 같이 구구단 2단을 출력하세요.
             2 x 1 = 2
             2 x 2 = 4
@@ -11,6 +16,10 @@ public class LoopMain03 {
             2 x 8 = 16
             2 x 9 = 18
          */
+        for (int n = 1; n < 10; n++) {
+            // System.out.println("2 x " + n + " = " + (2 * n));
+            System.out.printf("2 x %d = %d\n", n, 2 * n);
+        }
 
         /* Ex2. 아래와 같이 출력하세요.
             1     2     3     4     5     6     7     8     9     10
@@ -24,6 +33,12 @@ public class LoopMain03 {
             81    82    83    84    85    86    87    88    89    90
             91    92    93    94    95    96    97    98    99    100
          */
+        for (int n = 1; n <= 100; n++) {
+            System.out.print(n + "\t");
+            if (n % 10 == 0) {
+                System.out.println();
+            }
+        }
         
     }
 
