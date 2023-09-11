@@ -108,6 +108,15 @@ public class RpsMain {
             // computer가 이긴 경우
         }
         
+        int diff = user - computer;
+        if (diff == 0) { 
+            // 비긴 경우
+        } else if (diff == 1 || diff == -2) {
+            // user가 이긴 경우
+        } else {
+            // computer가 이긴 경우
+        }
+        
     }
 
 }
