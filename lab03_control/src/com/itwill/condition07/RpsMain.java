@@ -30,7 +30,83 @@ public class RpsMain {
         System.out.println("computer: " + computer);
 
         // 가위바위보 결과 출력:
+        if (user == 0 && computer == 0) {
+            
+        } else if (user == 0 && computer == 1) {
+            
+        } else if (user == 0 && computer == 2) {
+            
+        } else if (user == 1 && computer == 0) {
+            
+        } else if (user == 1 && computer == 1) {
+            
+        } else if (user == 1 && computer == 2) {
+            
+        } else if (user == 2 && computer == 0) {
+            
+        } else if (user == 2 && computer == 1) {
+            
+        } else {
+            
+        }
         
+        if (user == 0) { // user: 가위
+            if (computer == 0) { // computer: 가위
+                
+            } else if (computer == 1) { // computer: 바위
+                
+            } else { // computer: 보
+                
+            }
+        } else if (user == 1) { // user: 바위
+            if (computer == 0) { // computer: 가위
+                
+            } else if (computer == 1) { // computer: 바위
+                
+            } else { // computer: 보
+                
+            }
+        } else { // user: 보
+            if (computer == 0) { // computer: 가위
+                
+            } else if (computer == 1) { // computer: 바위
+                
+            } else { // computer: 보
+                
+            }
+        }
+        
+        if (user == computer) { // 비긴 경우
+            
+        } else if (user == 0) { // user: 가위
+            if (computer == 1) { // computer: 바위
+                
+            } else { // computer: 보
+                
+            }
+        } else if (user == 1) { // user: 바위
+            if (computer == 0) { // computer: 가위
+                
+            } else { // computer: 보
+                
+            }
+        } else { // user: 보
+            if (computer == 0) { // computer: 가위
+                
+            } else { // computer: 바위
+                
+            }
+        }
+        
+        if (user == computer) {
+            // 비긴 경우
+        } else if ((user == 0 && computer == 2) || 
+                (user == 1 && computer == 0) || 
+                (user == 2 && computer == 1)) { 
+            // user가 이긴 경우
+        } else {
+            // computer가 이긴 경우
+        }
         
     }
 
