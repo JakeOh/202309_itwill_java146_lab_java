@@ -30,8 +30,20 @@ public class OperatorMain {
         System.out.println("z = " + z); //-> z = 1
         
         result = z++ + 10; // 변수 뒤에서 사용된 증가 연산자
+        System.out.println("result = " + result); //-> result = 11
+        System.out.println("z = " + z); //-> z = 2
+        
+        int n = 1;
+        result = n++ + 10 + ++n;
+        // 연산 순서:
+        // 1) n++ + 10
+        //    (1) 덧셈(+): 1 + 10 = 11 -> 1) 연산 결과
+        //    (2) 증가(++): n=2
+        // 2) 1)의 결과 + ++n = 11 + ++n
+        //    (1) 증가(++): n=3
+        //    (2) 덧셈(+): 11 + 3 = 14 -> 최종 결과 -> result에 저장.
         System.out.println("result = " + result); //-> result = ?
-        System.out.println("z = " + z); //-> z = ?
+        System.out.println("n = " + n); //-> n = ?
     }
 
 }
