@@ -29,7 +29,39 @@ public class ArrayMain03 {
         // (5) (1)에서 만들 배열의 원소가 1 또는 3이면 "남성"을 저장, 2 또는 4이면 "여성"을 저장.
         // (6) 문자열 배열 내용을 출력.
         
-
+        int len = 10; // 배열의 길이(원소 개수)로 사용할 변수.
+        
+        int[] codes = new int[len]; // (1)
+        
+        // (2)
+        for (int i = 0; i < len; i++) {
+            codes[i] = random.nextInt(1, 5);
+        }
+        
+        // (3)
+        for (int x : codes) {
+            System.out.print(x + "\t");
+        }
+        
+        // (4)
+        String[] genders = new String[len];
+        
+        // (5)
+        for (int i = 0; i < len; i++) {
+            if (codes[i] == 1 || codes[i] == 3) {
+                genders[i] = "남성";
+            } else {
+                genders[i] = "여성";
+            }
+        }
+        System.out.println();
+        
+        // (6)
+        for (String s : genders) {
+            System.out.print(s + "\t");
+        }
+        System.out.println();
+        
     }
 
 }
