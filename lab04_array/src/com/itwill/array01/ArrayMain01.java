@@ -52,6 +52,31 @@ public class ArrayMain01 {
             System.out.println(numbers[i]);
         }
         
+        // 향상된(enhanced) for 구문, for-each 구문
+        // for (변수 선언 : 배열) { ... }
+        // 배열의 원소들을 처음부터 끝까지 순서대로 하나씩 꺼내면서 반복 블록을 실행.
+        for (int x : numbers) {
+            System.out.println(x);
+        }
+        
+        // 문자열 배열:
+        String[] names = new String[3]; // 문자열 3개를 저장할 수 있는 배열을 만듦.
+        
+        // 문자열 배열의 특정 위치(인덱스)에 문자열들을 저장.
+        names[0] = "강동균";
+        names[2] = "권오중";
+        
+        // 문자열 배열의 원소들을 출력:
+        // 1) 인덱스 이용
+        for (int i = 0; i < names.length; i++) {
+            System.out.println(names[i]);
+        }
+        
+        // 2) for-each 구문 이용
+        for (String s : names) {
+            System.out.println(s);
+        }
+        
     }
 
 }
