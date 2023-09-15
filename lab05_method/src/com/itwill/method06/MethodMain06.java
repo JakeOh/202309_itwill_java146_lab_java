@@ -20,6 +20,7 @@ public class MethodMain06 {
         
         // Ex 2.
         int number = random.nextInt(100); // [0, 100) 범위의 난수를 저장.
+        System.out.println("number = " + number);
         
         // isEven(정수): 정수가 짝수이면 true, 그렇지 않으면 false를 리턴.
         boolean result = isEven(number);
@@ -34,6 +35,42 @@ public class MethodMain06 {
         int bigger = whoIsBigger(x, y);
         System.out.println("bigger = " + bigger);
         
+    }
+    
+    public static int whoIsBigger(int x, int y) {
+//        return (x > y) ? x : y;
+        
+//        if (x > y) {
+//            return x;
+//        } else {
+//            return y;
+//        }
+        
+        int result = 0;
+        if (x > y) {
+            result = x;
+        } else {
+            result = y;
+        }
+        
+        return result;
+    }
+    
+    public static boolean isEven(int n) {
+//        return (n % 2 == 0) ? true : false;
+        
+//        if (n % 2 == 0) {
+//            return true;
+//        } else {
+//            return false;
+//        }
+        
+        boolean result = false;
+        if (n % 2 == 0) {
+            result = true;
+        }
+        
+        return result;
     }
 
     public static String parseGenderCode(int code) {
