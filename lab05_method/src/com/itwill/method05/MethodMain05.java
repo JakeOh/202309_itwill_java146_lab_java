@@ -19,6 +19,12 @@ public class MethodMain05 {
         int min = min(scores);
         System.out.println("최솟값 = " + min);
 
+        int maxIndex = indexOfMax(scores);
+        System.out.println("최댓값 인덱스 = " + maxIndex);
+        
+        int minIndex = indexOfMin(scores);
+        System.out.println("최솟값 인덱스 = " + minIndex);
+        
     }
     
     /**
@@ -53,6 +59,8 @@ public class MethodMain05 {
      * @return 최댓값.
      */
     public static int max(int[] array) {
+//        return array[indexOfMax(array)];
+        
         int max = array[0];
         for (int x : array) {
             if (x > max) {
@@ -76,6 +84,49 @@ public class MethodMain05 {
         }
         
         return min;
+    }
+    
+    /**
+     * 정수들의 1차원 배열 array에서 최댓값의 위치(인덱스)를 찾아서 리턴.
+     * 만약 최댓값이 2개 이상인 경우 첫번째 최댓값의 인덱스를 리턴.
+     * 
+     * @param array 정수들의 배열.
+     * @return 최댓값의 인덱스.
+     */
+    public static int indexOfMax(int[] array) {
+        int max = array[0]; // 최댓값을 저장할 변수
+        int index = 0; // 배열 원소의 인덱스를 저장할 변수
+        int maxIndex = 0; // 최댓값의 인덱스를 저장할 변수
+        for (int x : array) {
+            if (x > max) {
+                max = x;
+                maxIndex = index;
+            }
+            
+            index++;
+        }
+        
+        return maxIndex;
+    }
+    
+    /**
+     * 정수들의 1차원 배열 array에서 최솟값의 인덱스를 리턴.
+     * 만약 최솟값이 2개 이상이면, 첫번째 최솟값의 인덱스를 리턴.
+     * 
+     * @param array 정수들의 배열.
+     * @return array의 최솟값의 인덱스.
+     */
+    public static int indexOfMin(int[] array) {
+        int min = array[0]; // 최솟값을 저장할 변수.
+        int minIndex = 0; // 최솟값의 인덱스를 저장할 변수.
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] < min) {
+                min = array[i];
+                minIndex = i;
+            }
+        }
+        
+        return minIndex;
     }
     
 }
