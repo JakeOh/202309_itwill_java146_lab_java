@@ -23,6 +23,7 @@ public class AppMain04 {
         System.out.println("stu1 번호 = " + stu1.studentNo);
         System.out.println("stu1 이름 = " + stu1.studentName);
         System.out.println("stu1 점수 = " + stu1.score);
+        stu1.info();
         
         stu1.studentName = "홍길동";
         System.out.println("stu1 이름 = " + stu1.studentName);
@@ -36,6 +37,13 @@ public class AppMain04 {
         
         Student stu3 = new Student(101, "오쌤", new Score(50, 50, 70));
         System.out.println("stu3 = " + stu3);
+        stu3.info();
+        
+        // argument 5개를 갖는 생성자를 사용해서 Student 타입 객체 생성.
+        Student stu4 = new Student(102, "무명씨", 10, 20, 30);
+        System.out.println("stu4 = " + stu4);
+        System.out.println("stu4 국어 = " + stu4.score.korean);
+        stu4.info();
     }
 
 }
