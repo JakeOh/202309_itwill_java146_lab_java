@@ -24,6 +24,11 @@ public class AppMain05 {
         
         account1.withdraw(10_000);
         
+        // account1 계좌에서 account2 계좌로 5,000원을 이체.
+        account1.transfer(account2, 5_000);
+        account1.info();
+        account2.info();
+        
     }
 
 }

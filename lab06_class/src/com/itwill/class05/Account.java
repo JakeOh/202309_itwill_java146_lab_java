@@ -40,8 +40,8 @@ public class Account {
      * @return 출금 후 잔액.
      */
     public int withdraw(int amount) {
-        if (amount > 0) {
-            if (amount <= this.balance) {
+        if (amount > 0) { // 출금액이 0보다 크면
+            if (amount <= this.balance) { // 출금액이 잔고보다 작거나 같으면
                 this.balance -= amount;
             } else {
                 System.out.println("잔액이 부족합니다...");
@@ -54,13 +54,32 @@ public class Account {
     }
     
     /**
-     * transfer(이체). 내 계좌에서는 잔액에 amount를 더해주고, 
-     * 상대방 계좌에서는 잔액에서 amount를 빼줌.
+     * transfer(이체). 내 계좌에서는 잔액에서 amount를 빼주고(출금), 
+     * 상대방 계좌에서는 잔액에 amount를 더함(입금).
      * 
      * @param to 이체할 계좌(Account 타입).
      * @param amount 이체할 금액.
      * @return true.
      */
+    public boolean transfer(Account to, int amount) {
+//        this.balance -= amount; // 내 계좌에서 출금.
+//        to.balance += amount; // 상대방 계좌에 입금.
+        
+        boolean result = false; // 이체 실패했을 때 반환 값.
+        if (amount > 0) { // 이체 금액이 0보다 크면
+            if (amount <= this.balance) { // 이체 금액이 내 계좌 잔고보다 작거나 같으면
+                this.withdraw(amount); // 내 계좌에서 출금
+                to.deposit(amount); // 상대방 계좌에 입금
+                result = true; // 이체 성공 반환 값.
+            } else {
+                System.out.println("이체하기 위한 잔고가 부족합니다...");
+            }
+        } else {
+            System.out.println("이체할 금액은 0보다 커야 합니다...");
+        }
+        
+        return result;
+    }
     
     /**
      * info(정보).
