@@ -38,7 +38,22 @@ public final class ModifierMain08 { // final 클래스
         this.n = n; // final 필드를 명시적으로 초기화!
     }
     
+    public void test() {
+        System.out.println("ModifierMain08 인스턴스 메서드");
+    }
+    
+    public static void test2() {
+        System.out.println("ModifierMain08 스태틱 메서드");
+    }
+    
     public static void main(String[] args) {
+        test2(); // ModifierMain08.test2();
+        
+        ModifierMain08 app = new ModifierMain08(1);
+        System.out.println(app.s);
+        System.out.println(app.n);
+        app.test();
+        
         final int x = 1; // final 지역 변수
         //x = 2; //-> 컴파일 에러. final 지역 변수는 새로운 값을 할당(저장)할 수 없다.
         
