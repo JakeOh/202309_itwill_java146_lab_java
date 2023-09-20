@@ -7,8 +7,8 @@ public class Test {
     // 인스턴스 메서드
     public void printVariables() {
         System.out.println("--- 인스턴스 메서드 ---");
-        System.out.println("instanceVar = " + instanceVar);
-        System.out.println("staticVar = " + staticVar);
+        System.out.println("instanceVar = " + instanceVar); // this.instanceVar
+        System.out.println("staticVar = " + staticVar); // Test.staticVar
         System.out.println("-----------------------");
     }
     

@@ -49,10 +49,19 @@ public final class ModifierMain08 { // final 클래스
         Test.printVariables2();
         
         // instance 멤버 사용 방법: 참조 변수를 이용. 객체를 생성한 후에 사용 가능.
-        Test t = new Test();
-        System.out.println(t.instanceVar);
-        t.instanceVar = 100;
-        t.printVariables();
+        Test t1 = new Test();
+        System.out.println(t1.instanceVar);
+        t1.instanceVar = 100;
+        t1.printVariables();
+        
+        Test t2 = new Test();
+        t2.instanceVar = 200;
+        t2.staticVar = 12345;
+        //-> 경고(warning): static 필드를 마치 인스턴스 변수처럼 사용. 나쁜 코드.
+        //-> 좋은 코드: Test.staticVar = 12345;
+        t2.printVariables();
+        
+        t1.printVariables(); // line 59에서 변경한 값이 메서드 호출에 영향을 미침.
         
     }
 
