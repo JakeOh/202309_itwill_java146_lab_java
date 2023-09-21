@@ -55,8 +55,15 @@ public class BasicTv {
      * @return 전원 ON이면 true, 전원 OFF이면 false.
      */
     public boolean powerOnOff() {
-        // TODO: 켜져 있으면(powerOn == true), 전원을 false로 바꾸고
+        // 켜져 있으면(powerOn == true), 전원(powerOn)을 false로 바꾸고
         // 꺼져 있으면(powerOn == false), 전원을 true로 바꾸고, 그 상태를 리턴.
+        if (powerOn) {
+            powerOn = false;
+            System.out.println("TV OFF");
+        } else {
+            powerOn = true;
+            System.out.println("TV ON");
+        }
         
         return powerOn;
     }
@@ -70,7 +77,15 @@ public class BasicTv {
      * @return 바뀐 채널 값.
      */
     public int channelUp() {
-        // TODO
+        if (powerOn) {
+            if (channel < MAX_CHANNEL) { // 현재 채널 값이 최댓값보다 작으면
+                channel++; // 채널 증가
+            } else { // 현재 채널이 최댓값에 도달한 경우
+                channel = MIN_CHANNEL; // 채널의 최솟값으로 변경.
+            }
+            System.out.println("채널: " + channel);
+        }
+        
         return channel;
     }
     
@@ -83,7 +98,15 @@ public class BasicTv {
      * @return 바뀐 채널 값.
      */
     public int channelDown() {
-        // TODO
+        if (powerOn) {
+            if (channel > MIN_CHANNEL) {
+                channel--;
+            } else {
+                channel = MAX_CHANNEL;
+            }
+            System.out.println("채널: " + channel);
+        }
+        
         return channel;
     }
     
@@ -95,7 +118,13 @@ public class BasicTv {
      * @return 바뀐 음량.
      */
     public int volumeUp() {
-        // TODO
+        if (powerOn) {
+            if (volume < MAX_VOLUME) {
+                volume++;
+            }
+            System.out.println("음량: " + volume);
+        }
+        
         return volume;
     }
     
@@ -107,8 +136,21 @@ public class BasicTv {
      * @return 바뀐 음량.
      */
     public int volumeDown() {
-        // TODO
+        if (powerOn) {
+            if (volume > MIN_VOLUME) {
+                volume--;
+            }
+            System.out.println("음량: " + volume);
+        }
+        
         return volume;
+    }
+    
+    public String toString() {
+        return "BasicTv(powerOn=" + this.powerOn
+                + ", channel=" + this.channel
+                + ", volume=" + this.volume
+                + ")";
     }
     
 }
