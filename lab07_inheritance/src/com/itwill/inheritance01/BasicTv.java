@@ -49,6 +49,11 @@ public class BasicTv {
     // 메서드 - TV의 기능들
 
     // 1. 전원 ON/OFF 기능
+    /**
+     * TV 전원 ON/OFF 기능. 켜져 있으면(true) 끄고, 꺼져 있으면(false) 킴.
+     * 
+     * @return 전원 ON이면 true, 전원 OFF이면 false.
+     */
     public boolean powerOnOff() {
         // TODO: 켜져 있으면(powerOn == true), 전원을 false로 바꾸고
         // 꺼져 있으면(powerOn == false), 전원을 true로 바꾸고, 그 상태를 리턴.
@@ -57,24 +62,50 @@ public class BasicTv {
     }
     
     // 2. 채널 값 1 증가
+    /**
+     * 현재 채널 값을 1 증가시킴.
+     * 만약 현재 채널이 최댓값(MAX_CHANNEL)에 도달한 경우에는 
+     * 채널의 최솟값(MIN_CHANNEL)으로 변경.
+     * 
+     * @return 바뀐 채널 값.
+     */
     public int channelUp() {
         // TODO
         return channel;
     }
     
     // 3. 채널 값 1 감소
+    /**
+     * 현재 채널 값을 1 감소시킴.
+     * 만약 현재 채널이 최솟값(MIN_CHANNEL)에 도달한 경우에는 
+     * 채널의 최댓값(MAX_CHANNEL)으로 변경.
+     * 
+     * @return 바뀐 채널 값.
+     */
     public int channelDown() {
         // TODO
         return channel;
     }
     
     // 4. 음량 크기 1 증가
+    /**
+     * 현재 음량을 1 증가시킴.
+     * 만약 현재 음량이 최댓값(MAX_VOLUME)에 도달한 경우에는 음량을 변경하지 않음.
+     * 
+     * @return 바뀐 음량.
+     */
     public int volumeUp() {
         // TODO
         return volume;
     }
     
     // 5. 음량 크기 1 감소
+    /**
+     * 현재 음량을 1 감소시킴.
+     * 만약 현재 음량이 최솟값(MIN_VOLUME)에 도달한 경우에는 음량을 변경하지 않음.
+     * 
+     * @return 바뀐 음량.
+     */
     public int volumeDown() {
         // TODO
         return volume;
