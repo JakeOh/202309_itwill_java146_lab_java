@@ -50,7 +50,7 @@ public class BasicTv {
 
     // 1. 전원 ON/OFF 기능
     /**
-     * TV 전원 ON/OFF 기능. 켜져 있으면(true) 끄고, 꺼져 있으면(false) 킴.
+     * TV 전원 ON/OFF 기능. 켜져 있으면(true) 끄고, 꺼져 있으면(false) 켬.
      * 
      * @return 전원 ON이면 true, 전원 OFF이면 false.
      */
