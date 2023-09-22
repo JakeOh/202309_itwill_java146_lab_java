@@ -20,6 +20,15 @@ public class InheritanceMain03 {
         car3.drive();
         //-> 다형성으로 선언된 변수이더라도 재정의(override)된 메서드가 실행됨.
 
+        //car3.charge(); //-> 컴파일 에러
+        // 실제 생성된 객체는 HybridCar 타입이지만, Car 타입으로 선언했기 때문에
+        // Car 타입의 메서드들만 사용 가능.
+        
+        ((HybridCar) car3).charge(100);
+//        HybridCar hcar = (HybridCar) car3;
+        // 실제 생성된 객체는 HybridCar 타입이기 때문에, 타입변환(casting)이 가능.
+        // 타입 변환 후에는 HybridCar 타입의 모든 메서드들을 사용할 수 있게 됨.
+        
     }
 
 }

@@ -31,4 +31,10 @@ public class HybridCar extends Car {
     public void drive(int speed) {
         
     }
+    
+    public int charge(int battery) { // 충전
+        this.battery = battery;
+        return this.battery;
+    }
+    
 }
