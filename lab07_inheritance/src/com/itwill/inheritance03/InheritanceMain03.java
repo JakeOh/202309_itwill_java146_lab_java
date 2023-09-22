@@ -47,7 +47,7 @@ public class InheritanceMain03 {
         System.out.println(new Car(0, 0));
         System.out.println(new HybridCar(0, 0, 0));
         
-        // 다형성을 사용한 메서드 이용:
+        // 다형성을 사용한 메서드 호출:
         test(new Car(0, 0));
         test(new HybridCar(0, 0, 0));
         
