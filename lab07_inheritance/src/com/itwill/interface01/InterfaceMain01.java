@@ -27,7 +27,7 @@ public class InterfaceMain01 {
         // OracleDatabase 타입 객체 생성
 //        OracleDatabase db = new OracleDatabase();
         DatabaseModule db = new OracleDatabase();
-        // SuperType var = new SubType(); 다형성.
+        // SuperType var = new SubType(); - 다형성.
         
         int result = db.insert("데이터");
         System.out.println("삽입 결과=" + result);
