@@ -1,4 +1,4 @@
-package com.itwill.interface01;
+package com.itwill.database;
 
 public interface DatabaseModule {
     // 필드
