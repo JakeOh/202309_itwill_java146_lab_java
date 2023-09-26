@@ -30,6 +30,28 @@ public class MemberDaoImpl implements MemberDao {
         return count;
     }
     
+    /**
+     * 아규먼트 index가 유효한 범위의 인덱스인 지를 검사.
+     * index >= 0 이고, index가 배열에 저장된 원소 개수(count)보다 작으면 true, 
+     * 그렇지 않으면 false.
+     * 
+     * @param index 유효한 지 검사할 인덱스. 정수(int) 타입.
+     * @return true 또는 false.
+     */
+    public boolean isValidIndex(int index) {
+        return index >= 0 && index < count;
+    }
+    
+    /**
+     * 회원 정보를 저장할 수 있는 배열에 빈 공간이 있으면 true, 그렇지 않으면 false를 리턴.
+     * 배열(members)에 현재까지 저장된 원소 개수(count)가 배열의 길이보다 작으면 true.
+     * 
+     * @return true 또는 false.
+     */
+    public boolean isMemoryAvail() {
+        return count < MAX_LENGTH;
+    }
+    
     @Override
     public Member[] read() {
         // members를 그대로 리턴하지 말고, 실제 저장된 원소 개수 크기 만큼의 배열만 리턴.
@@ -44,7 +66,7 @@ public class MemberDaoImpl implements MemberDao {
     @Override
     public int create(Member member) {
         int result = 0;
-        if (count < MAX_LENGTH) {
+        if (isMemoryAvail()) {
             members[count] = member;
             count++;
             result = 1;
@@ -55,7 +77,7 @@ public class MemberDaoImpl implements MemberDao {
 
     @Override
     public Member read(int index) {
-        if (index >= 0 && index < count) {
+        if (isValidIndex(index)) {
             return members[index];
         } else {
             return null;
@@ -66,7 +88,7 @@ public class MemberDaoImpl implements MemberDao {
     public int update(int index, String password) {
         int result = 0;
         
-        if (index >= 0 && index < count) {
+        if (isValidIndex(index)) {
             members[index].setPassword(password);
             result = 1;
         }

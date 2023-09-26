@@ -48,6 +48,13 @@ public class MemberMain {
         
         System.out.print("변경할 인덱스> ");
         int index = Integer.parseInt(scanner.nextLine());
+        // index >= 0 && index < dao.getCount(): 유효한 인덱스
+        // index < 0 || index >= dao.getCount(): 유효하지 않은(회원 정보가 없는) 인덱스
+        if (!dao.isValidIndex(index)) {
+            System.out.println("> 해당 인덱스에는 회원 정보가 없음.");
+            return; // 메서드 종료
+        }
+        
         System.out.print("새 비밀번호> ");
         String password = scanner.nextLine();
         
@@ -75,6 +82,11 @@ public class MemberMain {
 
     public void createNewMember() {
         System.out.println("\n----- 새 회원 등록 -----");
+        
+        if (!dao.isMemoryAvail()) { // dao.getCount() >= MAX_LENGTH
+            System.out.println("> 저장 공간이 부족...");
+            return; // 메서드 종료
+        }
         
         System.out.print("아이디 입력> ");
         String id = scanner.nextLine();
