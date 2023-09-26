@@ -29,6 +29,12 @@ public class MemberMain {
             case 2: // 새 회원 등록
                 app.createNewMember();
                 break;
+            case 3: // 인덱스 검색
+                app.readMemberByIndex();
+                break;
+            case 4: // 비밀번호 변경
+                app.updatePassword();
+                break;
             default:
                 System.out.println("메뉴를 다시 선택하세요...");
             } // end switch
@@ -37,8 +43,39 @@ public class MemberMain {
         System.out.println("*** 프로그램 종료 ***");
     } // end main
 
+    public void updatePassword() {
+        System.out.println("\n----- 비밀번호 변경 -----");
+        
+        System.out.print("변경할 인덱스> ");
+        int index = Integer.parseInt(scanner.nextLine());
+        System.out.print("새 비밀번호> ");
+        String password = scanner.nextLine();
+        
+        int result = dao.update(index, password);
+        if (result == 1) {
+            System.out.println("> 비밀번호 변경 성공");
+        } else {
+            System.out.println("> 비밀번호 변경 실패");
+        }
+    }
+    
+    public void readMemberByIndex() {
+        System.out.println("\n----- 인덱스 검색 -----");
+        System.out.print("검색할 인덱스> ");
+        int index = Integer.parseInt(scanner.nextLine());
+        
+        Member m = dao.read(index);
+        if (m != null) {
+            System.out.println("결과> " + m);
+        } else {
+            System.out.println("> 해당 인덱스에는 회원 정보가 없음.");
+        }
+        System.out.println("-----------------------");
+    }
+
     public void createNewMember() {
         System.out.println("\n----- 새 회원 등록 -----");
+        
         System.out.print("아이디 입력> ");
         String id = scanner.nextLine();
         System.out.print("비밀번호 입력> ");

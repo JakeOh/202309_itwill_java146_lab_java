@@ -55,14 +55,23 @@ public class MemberDaoImpl implements MemberDao {
 
     @Override
     public Member read(int index) {
-        // TODO Auto-generated method stub
-        return null;
+        if (index >= 0 && index < count) {
+            return members[index];
+        } else {
+            return null;
+        }
     }
 
     @Override
     public int update(int index, String password) {
-        // TODO Auto-generated method stub
-        return 0;
+        int result = 0;
+        
+        if (index >= 0 && index < count) {
+            members[index].setPassword(password);
+            result = 1;
+        }
+        
+        return result;
     }
 
 }
