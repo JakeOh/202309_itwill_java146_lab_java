@@ -32,8 +32,13 @@ public class MemberDaoImpl implements MemberDao {
     
     @Override
     public Member[] read() {
-        // TODO Auto-generated method stub
-        return null;
+        // members를 그대로 리턴하지 말고, 실제 저장된 원소 개수 크기 만큼의 배열만 리턴.
+        Member[] memberArray = new Member[count];
+        for (int i = 0; i < count; i++) {
+            memberArray[i] = members[i];
+        }
+        
+        return memberArray;
     }
 
     @Override
