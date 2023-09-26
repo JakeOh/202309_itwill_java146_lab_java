@@ -43,8 +43,14 @@ public class MemberDaoImpl implements MemberDao {
 
     @Override
     public int create(Member member) {
-        // TODO Auto-generated method stub
-        return 0;
+        int result = 0;
+        if (count < MAX_LENGTH) {
+            members[count] = member;
+            count++;
+            result = 1;
+        }
+        
+        return result;
     }
 
     @Override
