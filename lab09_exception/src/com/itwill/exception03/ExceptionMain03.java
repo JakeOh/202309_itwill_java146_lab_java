@@ -31,17 +31,14 @@ public class ExceptionMain03 {
     }
     
     public int inputInteger2() {
-        int result = 0;
         try {
             System.out.print("정수 입력> ");
-            result = Integer.parseInt(sc.nextLine());
-            return result;
+            return Integer.parseInt(sc.nextLine());
         } catch (NumberFormatException e) {
             System.out.println("입력한 값은 정수가 아닙니다.");
-            result = inputInteger2();
+            return inputInteger2();
         }
         
-        return result;
     }
 
 }
