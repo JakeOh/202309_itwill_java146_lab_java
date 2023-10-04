@@ -15,12 +15,20 @@ package com.itwill.exception01;
 public class ExceptionMain01 {
 
     public static void main(String[] args) {
-        // 예외 종류 & 해결 방법
+        // 예외 종류 & 해결 방법(if-else)
         String s = "";
         if (s != null) {
             System.out.println("문자열 길이: " + s.length());
         } else {
             System.out.println("null");
+        }
+        
+        int x = 10;
+        int y = 0;
+        if (y != 0) {
+            System.out.println("몫 = " + (x / y));
+        } else {
+            System.out.println("0으로는 나눌 수 없습니다.");
         }
 
     }
