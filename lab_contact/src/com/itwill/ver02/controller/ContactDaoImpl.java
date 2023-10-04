@@ -82,6 +82,7 @@ public class ContactDaoImpl implements ContactDao {
         
         if (isValidIndex(index)) { // index가 유효하면(0 <= index < count)
             contacts[index] = contact; // 해당 인덱스의 Contact 객체를 업데이트.
+//            contacts[index].setName(contact.getName());
             result = 1; // 반환값을 1(성공)으로 설정.
         }
         
