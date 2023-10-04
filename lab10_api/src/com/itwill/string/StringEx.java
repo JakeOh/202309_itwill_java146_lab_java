@@ -35,11 +35,27 @@ public class StringEx {
         // ex4. 아래의 문자열 배열에서 대소문자 구별없이 "est"를 포함하는 문자열들을 출력.
         // 결과: TEST test TeSt tEsT
         String[] tests = {"TEST", "test", "TeSt", "tEsT", "테스트"};
-        
+        for (String s : tests) {
+            //if (s.toUpperCase().contains("EST")) {
+            if (s.toLowerCase().contains("est")) {
+                System.out.print(s + " ");
+            }
+        }
+        System.out.println();
         
         // ex5. 아래의 "YYYY-MM-DD" 형식의 문자열에서 년/월/일 정보를 int 타입 변수에 저장하고 출력.
         // 결과: year=2023, month=10, day=4
+        // String time = "17:48:30";
+        
         String date = "2023-10-04";
+        String[] stringArray= date.split("-"); //-> { "2023", "10", "04" }
+//        for (String s : stringArray) {
+//            System.out.println(s);
+//        }
+        int year = Integer.parseInt(stringArray[0]);
+        int month = Integer.parseInt(stringArray[1]);
+        int day = Integer.parseInt(stringArray[2]);
+        System.out.printf("year=%d, month=%d, day=%d\n", year, month, day);
     }
 
 }
