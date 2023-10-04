@@ -10,7 +10,7 @@ public class ExceptionMain03 {
         // ExceptionMain03 타입의 객체 생성
         ExceptionMain03 app = new ExceptionMain03();
         
-        int x = app.inputInteger();
+        int x = app.inputInteger2();
         System.out.println("x = " + x);
 
     }
@@ -25,6 +25,20 @@ public class ExceptionMain03 {
             } catch (NumberFormatException e) {
                 System.out.println("입력한 값은 정수가 아닙니다.");
             }
+        }
+        
+        return result;
+    }
+    
+    public int inputInteger2() {
+        int result = 0;
+        try {
+            System.out.print("정수 입력> ");
+            result = Integer.parseInt(sc.nextLine());
+            return result;
+        } catch (NumberFormatException e) {
+            System.out.println("입력한 값은 정수가 아닙니다.");
+            result = inputInteger2();
         }
         
         return result;
