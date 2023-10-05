@@ -48,7 +48,7 @@ public class StringEx {
         // String time = "17:48:30";
         
         String date = "2023-10-04";
-        String[] stringArray= date.split("-"); //-> { "2023", "10", "04" }
+        String[] stringArray = date.split("-"); //-> { "2023", "10", "04" }
 //        for (String s : stringArray) {
 //            System.out.println(s);
 //        }
