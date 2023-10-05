@@ -1,6 +1,8 @@
 package com.itwill.list01;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /*
  * Collection<E>
@@ -41,6 +43,39 @@ public class ListMain01 {
         System.out.println(languages);
         System.out.println("size=" + languages.size());
 
+        // 리스트의 특정 인덱스에 있는 원소 값을 읽음
+        System.out.println(languages.get(1));
+        
+        // for 반복문을 사용해서 리스트의 원소들을 모두 출력.
+        for (int i = 0; i < languages.size(); i++) {
+            System.out.print(languages.get(i) + ", ");
+        }
+        System.out.println();
+        
+        // 향상된 for 구문을 사용한 리스트 원소 출력
+        for (String s : languages) {
+            System.out.print(s + ", ");
+        }
+        System.out.println();
+        
+        // 리스트의 원소 삭제
+        languages.remove(0); // remove(int index)
+        System.out.println(languages);
+        
+        languages.remove("SQL"); // remove(Object element)
+        System.out.println(languages);
+        
+        List<String> list = Arrays.asList("Java", "SQL", "Java", "HTML");
+        ArrayList<String> alist = new ArrayList<String>(list);
+        System.out.println(alist);
+        boolean result = alist.remove("Java");
+        System.out.println("result=" + result);
+        System.out.println(alist);
+        
+        result = alist.remove("java");
+        System.out.println("result=" + result);
+        System.out.println(alist);
+        
     }
 
 }
