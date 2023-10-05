@@ -49,6 +49,7 @@ public class ListMain04 {
 //            }
 //        }
         
+        // equals() 메서드가 override되어 있는 경우:
         members.remove(new Member("guest", null));
         
         System.out.println(members);
