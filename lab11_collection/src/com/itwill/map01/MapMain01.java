@@ -1,6 +1,7 @@
 package com.itwill.map01;
 
 import java.util.HashMap;
+import java.util.Set;
 
 /*
  * Map<K, V>
@@ -42,7 +43,34 @@ public class MapMain01 {
         
         value = map.get(100); // map에 저장된 key가 없는 경우 -> null을 리턴.
         System.out.println(value);
-
+        
+        // getOrDefault(key, defaultValue)
+        System.out.println(map.getOrDefault(5, "무명씨")); // key가 있는 경우 -> value를 찾아서 리턴.
+        System.out.println(map.getOrDefault(500, "무명씨")); // key가 없는 경우 -> 아규먼트로 전달한 기본값을 리턴.
+        
+        // map에 저장된 데이터 삭제: remove(key)
+        // 1) key가 있는 경우, key-value를 map에서 삭제하고, 삭제한 value를 리턴.
+        // 2) key가 없는 경우, null을 리턴.
+        value = map.remove(5);
+        System.out.println("삭제된 값 = " + value);
+        System.out.println(map);
+        
+        value = map.remove(100);
+        System.out.println("삭제된 값 = " + value);
+        System.out.println(map);
+        
+        // put(key, value):
+        // 1) key가 없는 경우, key-value 데이터를 map에 저장.
+        // 2) key가 있는 경우, 키에 매핑되어 있는 값(value)를 변경.
+        map.put(10, "허균");
+        System.out.println(map);
+        
+        // map과 반복문
+        Set<Integer> kset = map.keySet(); // map에서 key들의 집합을 찾음.
+        for (Integer k : kset) {
+            System.out.println(k + " = " + map.get(k));
+        }
+        
     }
 
 }
