@@ -13,19 +13,19 @@ public interface ContactDao {
     List<Contact> read();
     
     /**
-     * 새로운 연락처 정보(이름, 전화번호, 이메일)을 리스트에 저장.
-     * 
-     * @param contact 리스트에 저장할 Contact 타입 객체.
-     * @return 1.
-     */
-    Contact read(int index);
-    
-    /**
      * 인덱스를 사용한 연락처 정보 검색 기능.
      * 
      * @param index 리스트에서 연락처 정보를 검색할 인덱스. 0 이상의 정수(int).
      * @return 아규먼트 index가 리스트의 인덱스 범위 안에 있으면 Contact 타입 객체를 리턴.
      * index가 리스트 인덱스 범위 밖에 있거나, 해당 인덱스의 원소가 null이면 null을 리턴.
+     */
+    Contact read(int index);
+    
+    /**
+     * 새로운 연락처 정보(이름, 전화번호, 이메일)을 리스트에 저장.
+     * 
+     * @param contact 리스트에 저장할 Contact 타입 객체.
+     * @return 1.
      */
     int create(Contact contact);
     
