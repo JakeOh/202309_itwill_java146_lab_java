@@ -31,7 +31,7 @@ public interface ContactDao {
      * 연락처 정보 업데이트 기능.
      * 배열의 특정 인덱스의 연락처 정보(이름, 전화번호, 이메일)을 업데이트.
      * 
-     * @param index 수정할 회원의 배열 인덱스. 0 이상의 정수.
+     * @param index 수정할 연락처의 배열 인덱스. 0 이상의 정수.
      * @param contact 업데이트할 이름, 전화번호, 이메일을 저장하고 있는 Contact 타입 객체.
      * @return 업데이트 성공하면 1, 실패하면 0.
      */
