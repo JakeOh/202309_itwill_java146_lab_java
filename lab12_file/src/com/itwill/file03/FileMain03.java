@@ -31,9 +31,26 @@ public class FileMain03 {
         try {
             in = new FileInputStream(origin); // 파일에서 메모리까지의 읽기 통로.
             bin = new BufferedInputStream(in); // 메모리에서 프로그램까지의 읽기 통로.
+//            bin = new BufferedInputStream(new FileInputStream(origin));
             
             out = new FileOutputStream(dest); // 메모리에서 파일까지의 쓰기 통로.
             bout = new BufferedOutputStream(out); // 프로그램에서 메모리까지의 쓰기 통로.
+//            bout = new BufferedOutputStream(new FileOutputStream(dest));
+            
+            long start = System.currentTimeMillis(); // 복사 시작 시간.
+            
+            while (true) {
+                byte[] buf = new byte[4 * 1024]; // 4KB 바이트 배열
+                int len = bin.read(buf); // RAM(메모리)에서 4KB씩 읽음.
+                if (len == -1) { // 파일 끝(EOF)
+                    break;
+                }
+                
+                bout.write(buf, 0, len); // RAM(메모리)에 바이트 배열의 내용을 씀.
+            }
+            
+            long end = System.currentTimeMillis(); // 복사 종료 시간.
+            System.out.println("복사 시간: " + (end - start) + "ms");
             
         } catch (Exception e) {
             e.printStackTrace();
