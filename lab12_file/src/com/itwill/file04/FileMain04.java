@@ -41,7 +41,7 @@ public class FileMain04 {
             System.out.println(dest + " 파일 복사 성공");
             
         } catch (Exception e) {
-            
+            e.printStackTrace();
         }
 
     }
