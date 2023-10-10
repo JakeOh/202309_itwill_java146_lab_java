@@ -43,7 +43,7 @@ public class ContactMain03 {
             }
         }
         
-        System.out.println("프로그램 종료");
+        System.out.println("*** 프로그램 종료 ***");
     }
     
     private int inputInteger() {
@@ -152,7 +152,7 @@ public class ContactMain03 {
 
     private MainMenu selectMainMenu() {
         System.out.println("\n--------------------------------------------------------------------------");
-        System.out.println("[0]종료 | [1]목록 | [2]새 연락처 | [3]인덱스 검색 | [4]업데이트 | [5] 삭제");
+        System.out.println("[0]종료 | [1]목록 | [2]새 연락처 | [3]인덱스 검색 | [4]업데이트 | [5]삭제");
         System.out.println("--------------------------------------------------------------------------");
         System.out.print("선택> ");
         

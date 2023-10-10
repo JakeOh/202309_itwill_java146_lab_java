@@ -57,7 +57,11 @@ public class ContactDaoImpl implements ContactDao {
             return 0;
         }
         
-        contacts.set(index, contact);
+//        contacts.set(index, contact);
+        Contact c = contacts.get(index); // 업데이트 전의 연락처.
+        c.setName(contact.getName()); // 이름 업데이트
+        c.setPhone(contact.getPhone()); // 전화번호 업데이트
+        c.setEmail(contact.getEmail()); // 이메일 업데이트
         
         return 1;
     }
