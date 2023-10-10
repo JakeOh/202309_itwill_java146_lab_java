@@ -39,9 +39,9 @@ public class FileMain02 {
 //                out.write(buffer); // (2) 파일에 4KB씩 씀.
                 out.write(buffer, 0, read);
                 // write(byte[] b, int off, int len)
-                // b: 파일에 쓸 데이터를 가지고 있는 바이트 배열.
-                // off: 배열 b에서 읽기 시작할 인덱스.
-                // len: 파일에 쓸 바이트 수.
+                // b: byte 배열. 파일에 쓸 데이터를 가지고 있는 바이트 배열.
+                // off: offset. 배열 b에서 읽기 시작할 인덱스.
+                // len: length. 파일에 쓸 바이트 수.
             }
             
             long end = System.currentTimeMillis(); // 파일 복사 종료 시간.
