@@ -54,7 +54,9 @@ public class ContactDaoImpl implements ContactDao {
     @Override
     public int create(Contact contact) {
         contacts.add(contact);
-        // TODO: 바뀐 리스트를 파일에 쓰기.
+        
+        // 바뀐 리스트를 파일에 쓰기.
+        FileUtil.writeDataToFile(contacts);
         
         return 1;
     }
@@ -71,7 +73,8 @@ public class ContactDaoImpl implements ContactDao {
         c.setPhone(contact.getPhone()); // 전화번호 업데이트
         c.setEmail(contact.getEmail()); // 이메일 업데이트
         
-        // TODO: 바뀐 리스트를 파일에 쓰기.
+        // 바뀐 리스트를 파일에 쓰기.
+        FileUtil.writeDataToFile(contacts);
         
         return 1;
     }
@@ -84,7 +87,8 @@ public class ContactDaoImpl implements ContactDao {
         
         contacts.remove(index);
         
-        // TODO: 바뀐 리스트를 파일에 쓰기.
+        // 바뀐 리스트를 파일에 쓰기.
+        FileUtil.writeDataToFile(contacts);
         
         return 1;
     }

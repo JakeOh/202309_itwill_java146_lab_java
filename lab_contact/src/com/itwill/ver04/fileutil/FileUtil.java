@@ -1,6 +1,12 @@
 package com.itwill.ver04.fileutil;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +30,14 @@ public class FileUtil {
      */
     public static File initDataDir() {
         File dir = new File(DATA_DIR);
-        // TODO: 폴더가 없는 경우, 폴더를 만들기.
+
+        // 폴더가 없는 경우, 폴더를 만들기.
+        if (dir.exists()) {
+            System.out.println("데이터 폴더가 이미 있습니다.");
+        } else {
+            dir.mkdir();
+            System.out.println("데이터 폴더 생성 성공!");
+        }
         
         return dir;
     }
@@ -40,7 +53,16 @@ public class FileUtil {
 //        String file = DATA_DIR + File.separator + DATA_FILE; //-> "data/contacts.dat"
         File file = new File(DATA_DIR, DATA_FILE); //-> data/contacts.dat 파일 객체
         
-        // TODO: 파일을 읽어서 List<Contact>를 생성.
+        // 파일을 읽어서 List<Contact>를 생성.
+        try (
+                FileInputStream in = new FileInputStream(file);
+                BufferedInputStream bis = new BufferedInputStream(in);
+                ObjectInputStream ois = new ObjectInputStream(bis);
+        ) {
+            list = (List<Contact>) ois.readObject();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         
         return list;
     }
@@ -53,7 +75,17 @@ public class FileUtil {
     public static void writeDataToFile(List<Contact> list) {
         File file = new File(DATA_DIR, DATA_FILE);
         
-        // TODO: list를 file에 write
+        // list를 file에 write
+        try (
+                FileOutputStream out = new FileOutputStream(file);
+                BufferedOutputStream bos = new BufferedOutputStream(out);
+                ObjectOutputStream oos = new ObjectOutputStream(bos);
+        ) {
+            oos.writeObject(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
     }
     
     /**
