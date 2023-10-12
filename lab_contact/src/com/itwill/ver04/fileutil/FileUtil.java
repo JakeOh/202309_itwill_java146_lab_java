@@ -95,7 +95,7 @@ public class FileUtil {
      * @return 연락처(Contact)를 원소로 갖는 리스트.
      */
     public static List<Contact> initData() {
-        File file = new File(DATA_DIR, DATA_FILE);
+        File file = new File(DATA_DIR, DATA_FILE); //-> data/contacts.dat
         
         List<Contact> list = new ArrayList<>();
         if (file.exists()) { // 데이터 파일이 만들어져 있으면
