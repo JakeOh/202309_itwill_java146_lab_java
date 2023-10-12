@@ -35,8 +35,25 @@ package com.itwill.inner01;
 public class InnerMain01 {
 
     public static void main(String[] args) {
-        // TODO Auto-generated method stub
+        // Outer 클래스 타입 객체 생성
+        Outer outer1 = new Outer(1, 2, "java");
+        System.out.println(outer1);
+        
+        // Outer.Inner 클래스 타입 객체 생성
+        Outer.Inner inner1 = outer1.new Inner(100);
+        inner1.info();
+        
+        Outer.Inner inner2 = outer1.new Inner(123);
+        inner2.info();
+        
+//        System.out.println(inner1.getX()); //-> 상속과 내부 클래스의 다른 점.
 
+        Outer outer2 = new Outer(0, 0, "점심시간");
+        System.out.println(outer2);
+        
+        Outer.Inner inner3 = outer2.new Inner(111);
+        inner3.info();
+        
     }
 
 }
