@@ -1,5 +1,9 @@
 package com.itwill.inner01;
 
+// 내부 클래스 이름 임포트
+import com.itwill.inner01.Outer.Inner;
+import com.itwill.inner01.Enclosing.Nested;
+
 /*
  * 변수 선언 위치:
  * 1. 필드: 클래스의 멤버로 선언하는 변수. 접근 수식어(private, public, ...)를 사용할 수 있음.
@@ -51,8 +55,25 @@ public class InnerMain01 {
         Outer outer2 = new Outer(0, 0, "점심시간");
         System.out.println(outer2);
         
-        Outer.Inner inner3 = outer2.new Inner(111);
+        // import 문장이 있는 경우:
+        Inner inner3 = outer2.new Inner(111);
         inner3.info();
+        
+        // Enclosing 클래스의 static 멤버 사용: ClassName.member
+        System.out.println(Enclosing.var);
+        Enclosing.test();
+        
+        // Enclosing 타입 객체 생성
+        Enclosing en = new Enclosing(100);
+        System.out.println(en); // en.toString()
+        
+        // Enclosing.Nested 타입 객체 생성
+        Enclosing.Nested nested = new Enclosing.Nested(111);
+        nested.info();
+        
+        // import 문장이 있는 경우
+        Nested nested2 = new Nested(222);
+        nested2.info();
         
     }
 
