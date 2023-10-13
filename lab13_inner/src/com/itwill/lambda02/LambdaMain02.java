@@ -18,6 +18,16 @@ public class LambdaMain02 {
         return result;
     }
     
+    public List<Object> map(List<Object> list, MyMapper mapper) {
+        List<Object> result = new ArrayList<>();
+        
+        for (Object x : list) {
+            result.add(mapper.transform(x));
+        }
+        
+        return result;
+    }
+    
     public static void main(String[] args) {
         // LambdaMain02 타입 객체 생성
         LambdaMain02 app = new LambdaMain02();
@@ -40,6 +50,51 @@ public class LambdaMain02 {
         List<Object> odds = app.filter(numbers, (x) -> (Integer) x % 2 == 1);
         System.out.println(odds);
 
+        List<Object> languages = Arrays.asList("Java", "SQL", "JavaScript", "HTML", "Servlet");
+        System.out.println(languages);
+        
+        // languages의 원소들 중에서 5글자 이상인 문자열들로 이루어진 리스트를 만들고 출력.
+//        List<Object> result = app.filter(languages, new MyFilter() {
+//            @Override
+//            public boolean test(Object x) {
+//                return ((String) x).length() >= 5;
+//            }
+//        });
+        List<Object> result = app.filter(languages, (x) -> ((String) x).length() >= 5);
+        System.out.println(result);
+        
+        // 리스트 numbers의 원소가 짝수이면 "even", 홀수이면 "odd"를 저장하는 리스트를 만들고 출력
+        List<Object> evenOrOdd = app.map(numbers, new MyMapper() {
+            @Override
+            public Object transform(Object x) {
+//                if ((Integer) x % 2 == 0) {
+//                    return "even";
+//                } else {
+//                    return "odd";
+//                }
+                return ((Integer) x % 2 == 0) ? "even" : "odd";
+            }
+        });
+        System.out.println(evenOrOdd);
+        
+//        List<Object> evenOrOdd2 = app.map(numbers, (x) -> {
+//            if ((Integer) x % 2 == 0) {
+//                return "짝수";
+//            } else {
+//                return "홀수";
+//            }
+//        });
+        List<Object> evenOrOdd2 = app.map(numbers, 
+                (x) -> ((Integer) x % 2 == 0) ? "even" : "odd");
+        System.out.println(evenOrOdd2);
+        
+        // numbers의 원소들의 제곱을 저장하는 리스트를 만들고 출력.
+        List<Object> squares = app.map(numbers, (x) -> (Integer) x * (Integer) x);
+        System.out.println(squares);
+        
+        // languages의 문자열들을 모두 대문자로 변환한 리스트를 만들고 출력.
+        List<Object> upperCases = app.map(languages, (x) -> ((String) x).toUpperCase());
+        System.out.println(upperCases);
     }
 
 }
