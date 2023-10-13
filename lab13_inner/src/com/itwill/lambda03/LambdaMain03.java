@@ -1,6 +1,7 @@
 package com.itwill.lambda03;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -57,7 +58,32 @@ public class LambdaMain03 {
                 .map((x) -> x * x)
                 .toList();
         System.out.println(oddSquares2);
-
+        
+        List<String> languages = Arrays.asList("Java", "JavaScript", "Python", "Kotlin", "C");
+        System.out.println(languages);
+        
+        // languages의 문자열들 중에서 5글자 이상인 문자열들을 소문자로 변환한 리스트를 만들고 출력.
+        List<String> result = languages.stream()
+                .filter((x) -> x.length() >= 5)
+//                .map((x) -> x.toLowerCase())
+                .map(String::toLowerCase)
+                .toList();
+        System.out.println(result);
+        
+        // 람다 표현식이 아규먼트를 1개만 갖고,
+        // 람다의 리턴값이 그 아규먼트에서 '파라미터가 없는 메서드' 호출 결과인 경우
+        // 메서드 참조 방식으로 람다 표현식을 작성할 수 있음.
+        // (x) -> x.toLowerCase() 와 String::toLowerCase 는 같은 람다 표현식.
+        // (x) -> x.length() 와 String::length 는 같은 람다 표현식.
+        
+        // 람다 표현식이 아규먼트를 1개만 전달받고,
+        // 람다의 구현부가 메서드 1개 호출이고, 그 메서드가 람다의 아규먼트를 전달받는 경우,
+        // 메서드 참조 방식을 사용할 수 있음.
+        // (x) -> System.out.println(x)
+        // System.out::println
+//        languages.forEach((x) -> System.out.println(x));
+        languages.forEach(System.out::println);
+        
     }
 
 }
