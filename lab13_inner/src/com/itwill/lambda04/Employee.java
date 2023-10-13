@@ -60,7 +60,7 @@ public class Employee {
     
     @Override
     public String toString() {
-        return String.format("Employee{id=%d, name=%s, dept=%s, title=%s, salary: %f}", 
+        return String.format("Employee{id=%d, name=%s, dept=%s, title=%s, salary: %.2f}", 
                 empId, empName, dept, empTitle, salary);
     }
     
