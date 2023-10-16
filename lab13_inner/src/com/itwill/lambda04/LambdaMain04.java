@@ -50,16 +50,74 @@ public class LambdaMain04 {
         
         mean = employees.stream()
                 .filter((x) -> x.getDept().contains("개발")) // 필터
-                .mapToDouble((x) -> x.getSalary()) // 매퍼
+//                .mapToDouble((x) -> x.getSalary()) // 매퍼
+                .mapToDouble(Employee::getSalary)
                 .average() // 집계 메서드
                 .orElseThrow();
         System.out.println("mean = " + mean);
         
         // 4. 직급이 "사원"인 직원들의 급여 합계를 출력.
+        System.out.println("----- Ex4. -----");
+        sum = employees.stream()
+                .filter((x) -> x.getEmpTitle().equals("사원"))
+                .mapToDouble(Employee::getSalary) // (x) -> x.getSalary()
+                .sum();
+        System.out.println("sum = " + sum);
+        
         // 5. 직급이 "사원"인 직원들의 급여 평균을 출력.
+        System.out.println("----- Ex5. -----");
+        mean = employees.stream()
+                .filter((x) -> x.getEmpTitle().equals("사원"))
+                .mapToDouble(Employee::getSalary) // (x) -> x.getSalary()
+                .average()
+                .orElseThrow();
+        System.out.println("mean = " + mean);
+        
         // 6. 급여가 1_000을 초과하는 직원들의 정보를 한 줄에 한 명씩 출력.
+        System.out.println("----- Ex6. -----");
+//        for (Employee e : employees) {
+//            if (e.getSalary() > 1_000) {
+//                System.out.println(e);
+//            }
+//        }
+        employees.stream()
+                .filter((x) -> x.getSalary() > 1000)
+                .forEach(System.out::println); // (x) -> System.out.println(x)
+        
         // 7. 개발1팀 직원들의 급여를 10% 인상하고, 인상한 급여의 평균을 출력.
+        System.out.println("----- Ex7. -----");
+        sum = 0; // 인상된 급여들의 합계를 저장할 변수
+        count = 0; // 직원수를 저장할 변수
+        for (Employee e : employees) {
+            if (e.getDept().equals("개발1팀")) {
+                sum += e.getSalary() * 1.1;
+                count++;
+            }
+        }
+        mean = sum / count; // 인상된 급여들의 평균
+        System.out.println("mean = " + mean);
+        
+        mean = employees.stream()
+                .filter((x) -> x.getDept().equals("개발1팀"))
+                .mapToDouble((x) -> x.getSalary() * 1.1)
+                .average()
+                .orElseThrow();
+        System.out.println("mean = " + mean);
+        
         // 8. 직급 "대리"는 몇 명?
+        System.out.println("----- Ex8. -----");
+        count = 0; // 대리 숫자를 저장할 변수
+        for (Employee e : employees) {
+            if (e.getEmpTitle().equals("대리")) {
+                count++;
+            }
+        }
+        System.out.println("count = " + count);
+        
+        long count2 = employees.stream()
+                .filter((x) -> x.getEmpTitle().equals("대리"))
+                .count();
+        System.out.println("count = " + count2);
 
     }
 
