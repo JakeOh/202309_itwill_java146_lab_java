@@ -17,8 +17,44 @@ public class LambdaMain04 {
         );
         
         // 1. 모든 직원들의 정보를 한 줄에 한 명씩 출력.
+        System.out.println("----- Ex1. -----");
+//        for (Employee e : employees) {
+//            System.out.println(e);
+//        }
+//        employees.forEach((x) -> System.out.println(x));
+        employees.forEach(System.out::println);
+        
         // 2. 개발팀(1,2팀)에서 일하는 직원들의 급여 합계를 출력.
+        System.out.println("----- Ex2. -----");
+        double sum = 0; // 급여의 합계를 저장할 변수
+        int count = 0; // 개발팀의 직원수를 저장할 변수
+        for (Employee e : employees) {
+            if (e.getDept().contains("개발")) {
+                // e.getDept().equals("개발1팀") || e.getDept().equals("개발2팀")
+                sum += e.getSalary();
+                count++;
+            }
+        }
+        System.out.println("sum = " + sum + ", count = " + count);
+        
+        sum = employees.stream()
+                .filter((x) -> x.getDept().contains("개발")) // 필터
+                .mapToDouble((x) -> x.getSalary()) // 매퍼(변환기)
+                .sum(); // 집계 메서드
+        System.out.println("sum = " + sum);
+        
         // 3. 개발팀에서 일하는 직원들의 급여 평균을 출력.
+        System.out.println("----- Ex3. -----");
+        double mean = sum / count;
+        System.out.println("mean = " + mean);
+        
+        mean = employees.stream()
+                .filter((x) -> x.getDept().contains("개발")) // 필터
+                .mapToDouble((x) -> x.getSalary()) // 매퍼
+                .average() // 집계 메서드
+                .orElseThrow();
+        System.out.println("mean = " + mean);
+        
         // 4. 직급이 "사원"인 직원들의 급여 합계를 출력.
         // 5. 직급이 "사원"인 직원들의 급여 평균을 출력.
         // 6. 급여가 1_000을 초과하는 직원들의 정보를 한 줄에 한 명씩 출력.
