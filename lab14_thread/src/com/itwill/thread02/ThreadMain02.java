@@ -39,7 +39,56 @@ public class ThreadMain02 {
             }
             
         }
+        
+        // (3) Runnable 객체를 아규먼트로 갖는 Thread 생성자 호출
+        Thread th1 = new Thread(new MyRunnable("지역 클래스"));
+        
+        // 익명 클래스를 사용한 쓰레드 객체 생성
+        Thread th2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < 100; i++) {
+                    System.out.println(i + " - 익명 클래스");
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        
+        // 람다 표현식을 사용한 쓰레드 객체 생성.
+        Thread th3 = new Thread(() -> {
+            for (int i = 0; i < 100; i++) {
+                System.out.println(i + "- 람다 표현식");
+                try {
+                    Thread.sleep(10); // 10ms = (10/1000)초 = 0.01초
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
+        long start = System.currentTimeMillis();
+        
+        // (4) 쓰레드 객체에서 start() 메서드 호출 -> 쓰레드 실행
+        th1.start();
+        th2.start();
+        th3.start();
+        
+        try {
+            th1.join();
+            th2.join();
+            th3.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        
+        long end = System.currentTimeMillis();
+        System.out.println("경과시간 = " + (end - start) + "ms");
+        
+        System.out.println("=== main 메서드 종료 ===");
     }
 
 }
