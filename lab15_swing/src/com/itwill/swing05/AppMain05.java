@@ -126,6 +126,12 @@ public class AppMain05 {
         frame.getContentPane().add(cbStatic);
         
         comboBox = new JComboBox<>();
+        comboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handleComboBoxChange(e);
+            }
+        });
         comboBox.setFont(new Font("D2Coding", Font.PLAIN, 24));
         
         // 콤보박스에서 사용할 문자열(아이템)들의 배열:
@@ -139,6 +145,12 @@ public class AppMain05 {
         frame.getContentPane().add(comboBox);
         
         btnInfo = new JButton("확인");
+        btnInfo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handleInfoButtonClick();
+            }
+        });
         btnInfo.setFont(new Font("D2Coding", Font.PLAIN, 24));
         btnInfo.setBounds(500, 134, 160, 60);
         frame.getContentPane().add(btnInfo);
@@ -150,6 +162,17 @@ public class AppMain05 {
         textArea = new JTextArea();
         textArea.setFont(new Font("D2Coding", Font.PLAIN, 24));
         scrollPane.setViewportView(textArea);
+    }
+
+    private void handleInfoButtonClick() {
+        // TODO: 라디오버튼의 선택 상태, 체크박스 선택 상태, 콤보박스의 선택 상태를 JTextArea에 출력.
+        
+    }
+
+    private void handleComboBoxChange(ActionEvent e) {
+        textArea.setText(e.getSource().toString());
+        // TODO: 콤보박스에서 선택된 아이템(문자열)을 JTextArea에 출력.
+        // ((JComboBox<String>) e.getSource()).get
     }
 
     private void handleCheckBoxClick(ActionEvent e) {
