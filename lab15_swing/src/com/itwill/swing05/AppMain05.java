@@ -165,24 +165,65 @@ public class AppMain05 {
     }
 
     private void handleInfoButtonClick() {
-        // TODO: 라디오버튼의 선택 상태, 체크박스 선택 상태, 콤보박스의 선택 상태를 JTextArea에 출력.
+        // 라디오버튼의 선택 상태, 체크박스 선택 상태, 콤보박스의 선택 상태를 JTextArea에 출력.
+        StringBuffer buffer = new StringBuffer();
         
+        // 어떤 라디오버튼이 선택됐는 지를 체크:
+        if (rbPrivate.isSelected()) {
+            buffer.append(rbPrivate.getText());
+        } else if (rbPackage.isSelected()) {
+            buffer.append(rbPackage.getText());
+        } else if (rbProtected.isSelected()) {
+            buffer.append(rbProtected.getText());
+        } else {
+            buffer.append(rbPublic.getText());
+        }
+        buffer.append(" 라디오버튼 선택됨.\n");
+        
+        // 어떤 체크박스가 선택되어 있는 지를 체크
+        if (cbAbstract.isSelected()) {
+            buffer.append(cbAbstract.getText()).append(" ");
+        }
+        if (cbFinal.isSelected()) {
+            buffer.append(cbFinal.getText()).append(" ");
+        }
+        if (cbStatic.isSelected()) {
+            buffer.append(cbStatic.getText()).append(" ");
+        }
+        buffer.append("체크박스 선택됨.\n");
+        
+        // 콤보박스에서 선택된 아이템:
+        buffer.append(comboBox.getSelectedItem()).append(" 콤보박스 아이템 선택됨.\n");
+        
+        textArea.setText(buffer.toString());
     }
 
     private void handleComboBoxChange(ActionEvent e) {
-        textArea.setText(e.getSource().toString());
-        // TODO: 콤보박스에서 선택된 아이템(문자열)을 JTextArea에 출력.
-        // ((JComboBox<String>) e.getSource()).get
+//        textArea.setText(e.getSource().toString());
+        
+        // 콤보박스에서 선택된 아이템(문자열)을 JTextArea에 출력.
+        JComboBox<String> combo = (JComboBox<String>) e.getSource();
+        String selected = combo.getSelectedItem().toString();
+        textArea.setText(selected + " 선택됨");
     }
 
     private void handleCheckBoxClick(ActionEvent e) {
-        textArea.setText(e.getSource().toString());
-        // TODO: 클릭한 체크박스 문자열과 선택여부를 JTextArea에 출력.
+//        textArea.setText(e.getSource().toString());
         
+        // 클릭한 체크박스 문자열과 선택여부를 JTextArea에 출력.
+        JCheckBox cb = (JCheckBox) e.getSource();
+        String cbName = cb.getText();
+        boolean selected = cb.isSelected();
+        textArea.setText(cbName + ": " + selected);
     }
 
     private void handleRadioButtonClick(ActionEvent e) {
-        textArea.setText(e.getSource().toString());
-        // TODO: 클릭한 라디오버튼 문자열과 선택여부를 JTextArea에 출력.
+//        textArea.setText(e.getSource().toString());
+        
+        // 클릭한 라디오버튼 문자열과 선택여부를 JTextArea에 출력.
+        JRadioButton rb = (JRadioButton) e.getSource(); // 이벤트가 발생한 컴포넌트
+        String rbName = rb.getText(); // 버튼 텍스트
+        boolean selected = rb.isSelected(); // 버튼 선택 여부
+        textArea.setText(rbName + ": " + selected);
     }
 }
