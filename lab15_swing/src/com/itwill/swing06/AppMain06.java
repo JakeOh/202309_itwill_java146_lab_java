@@ -41,7 +41,7 @@ public class AppMain06 {
      */
     private void initialize() {
         frame = new JFrame();
-        frame.setBounds(100, 100, 450, 300);
+        frame.setBounds(100, 100, 450, 452);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);
         
@@ -83,6 +83,30 @@ public class AppMain06 {
         btnConfirmDlg.setFont(new Font("D2Coding", Font.PLAIN, 24));
         btnConfirmDlg.setBounds(12, 84, 410, 64);
         frame.getContentPane().add(btnConfirmDlg);
+        
+        final JButton btnInputDlg = new JButton("Input Dialog");
+        btnInputDlg.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // 입력(Input) 다이얼로그 보여주기
+                String result = JOptionPane.showInputDialog(frame, "입력하세요...");
+                btnInputDlg.setText(result);
+            }
+        });
+        btnInputDlg.setFont(new Font("D2Coding", Font.PLAIN, 24));
+        btnInputDlg.setBounds(12, 158, 410, 64);
+        frame.getContentPane().add(btnInputDlg);
+        
+        JButton btnCustomDlg = new JButton("Custom Dialog");
+        btnCustomDlg.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // 내가 만든 다이얼로그 보여주기
+                MyDialog.showMyDialog(frame);
+            }
+        });
+        btnCustomDlg.setFont(new Font("D2Coding", Font.PLAIN, 24));
+        btnCustomDlg.setBounds(12, 232, 410, 64);
+        frame.getContentPane().add(btnCustomDlg);
     }
-
 }
