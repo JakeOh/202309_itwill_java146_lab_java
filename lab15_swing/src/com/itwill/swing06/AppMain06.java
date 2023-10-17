@@ -45,6 +45,8 @@ public class AppMain06 {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);
         
+        frame.setTitle("메인");
+        
         JButton btnMsgDlg = new JButton("Message Dialog");
         btnMsgDlg.addActionListener(new ActionListener() {
             @Override
@@ -108,5 +110,22 @@ public class AppMain06 {
         btnCustomDlg.setFont(new Font("D2Coding", Font.PLAIN, 24));
         btnCustomDlg.setBounds(12, 232, 410, 64);
         frame.getContentPane().add(btnCustomDlg);
+        
+        JButton btnCustomFrame = new JButton("Custom Frame");
+        btnCustomFrame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // 내가 만든 JFrame 보여주기:
+                MyFrame.showMyFrame(frame, AppMain06.this);
+            }
+        });
+        btnCustomFrame.setFont(new Font("D2Coding", Font.PLAIN, 24));
+        btnCustomFrame.setBounds(12, 306, 410, 64);
+        frame.getContentPane().add(btnCustomFrame);
     }
+    
+    public void notify(String msg) {
+        System.out.println("notify: " + msg);
+    }
+    
 }
