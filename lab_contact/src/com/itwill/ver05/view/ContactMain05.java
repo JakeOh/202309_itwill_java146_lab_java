@@ -81,6 +81,12 @@ public class ContactMain05 {
         buttonPanel.add(btnCreate);
         
         btnUpdate = new JButton("업데이트");
+        btnUpdate.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ContactUpdateFrame.showContactUpdateFrame(frame);
+            }
+        });
         btnUpdate.setFont(new Font("D2Coding", Font.PLAIN, 28));
         buttonPanel.add(btnUpdate);
         
