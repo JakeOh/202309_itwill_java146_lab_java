@@ -32,7 +32,7 @@ public class ContactUpdateFrame extends JFrame {
     /**
      * Launch the application.
      */
-    public static void showContactUpdateFrame(Component parent) {
+    public static void showContactUpdateFrame(Component parent, int index) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
