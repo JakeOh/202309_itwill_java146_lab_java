@@ -7,9 +7,16 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
 import java.awt.Font;
+import java.util.List;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import com.itwill.ver04.controller.ContactDaoImpl;
+import com.itwill.ver04.model.Contact;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ContactMain05 {
     public static final String[] COLUMN_NAMES = {"이름", "전화번호"};
@@ -23,6 +30,9 @@ public class ContactMain05 {
     private JScrollPane scrollPane;
     private JTable table;
     private DefaultTableModel model;
+    
+    // Controller
+    private ContactDaoImpl dao = ContactDaoImpl.getInstance();
 
     /**
      * Launch the application.
@@ -44,7 +54,8 @@ public class ContactMain05 {
      * Create the application.
      */
     public ContactMain05() {
-        initialize();
+        initialize(); // Swing 컴포넌트들을 생성, 초기화
+        loadContactData(); // 파일에 저장된 연락처 데이터 로딩(JTable 초기화)
     }
 
     /**
@@ -60,6 +71,12 @@ public class ContactMain05 {
         frame.getContentPane().add(buttonPanel, BorderLayout.NORTH);
         
         btnCreate = new JButton("새 연락처");
+        btnCreate.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ContactCreateFrame.showContactCreateFrame(frame);
+            }
+        });
         btnCreate.setFont(new Font("D2Coding", Font.PLAIN, 28));
         buttonPanel.add(btnCreate);
         
@@ -81,9 +98,22 @@ public class ContactMain05 {
         table = new JTable();
         model = new DefaultTableModel(null, COLUMN_NAMES);
         table.setModel(model);
-        // TODO: 테이블 컬럼 이름 폰트 변경
-        // TODO: 테이블 데이터 행의 폰트 변경
+        // 테이블 컬럼 이름 폰트 변경
+        table.getTableHeader().setFont(new Font("D2Coding", Font.BOLD, 28));
+        // 데이터 행 폰트 변경
+        table.setFont(new Font("D2Coding", Font.PLAIN, 28));
         scrollPane.setViewportView(table);
+    }
+    
+    /*
+     * 연락처 데이터 로딩, 테이블 초기화
+     */
+    private void loadContactData() {
+        List<Contact> list = dao.read(); // 파일에서 데이터 읽어옴.
+        for (Contact c : list) {
+            Object[] row = { c.getName(), c.getPhone() };
+            model.addRow(row);
+        }
     }
 
 }
