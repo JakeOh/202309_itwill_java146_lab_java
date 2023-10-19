@@ -53,3 +53,18 @@ select deptno, ename, sal
 from emp
 where deptno in (10, 20)
 order by deptno, sal desc;
+
+-- 직원 테이블에서 직무가 'CLERK'인 
+-- 직원들의 직무, 이름, 급여를 출력.
+-- 정렬 순서: 이름.
+
+-- 직원 테이블에서 직무가 'CLERK' 또는 'MANAGER'인 
+-- 직원들의 직무, 이름, 급여를 검색.
+-- 정렬 순서: (1) 직무, (2) 급여.
+
+-- 직원 테이블에서 20번 부서에서 근무하는 CLERK의 
+-- 모든 정보(컬럼)을 검색.
+
+-- 직원 테이블에서 CLERK, ANALYST, MANAGER가 아닌 
+-- 직원들의 사번, 이름, 직무, 급여를 검색
+-- 정렬 순서: 사번.
