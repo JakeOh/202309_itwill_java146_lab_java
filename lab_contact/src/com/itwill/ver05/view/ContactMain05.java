@@ -14,7 +14,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import com.itwill.ver04.controller.ContactDaoImpl;
+import com.itwill.ver05.controller.ContactDaoImpl;
 import com.itwill.ver04.model.Contact;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -65,7 +65,7 @@ public class ContactMain05 {
     private void initialize() {
         frame = new JFrame();
         frame.setTitle("연락처 프로그램 v0.5");
-        frame.setBounds(100, 100, 683, 451);
+        frame.setBounds(100, 100, 640, 480);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         buttonPanel = new JPanel();
@@ -102,6 +102,8 @@ public class ContactMain05 {
         buttonPanel.add(btnDelete);
         
         btnSearch = new JButton("검색");
+        btnSearch.addActionListener((e) ->
+                    ContactSearchFrame.showContactSearchFrame(frame));
         btnSearch.setFont(new Font("D2Coding", Font.PLAIN, 28));
         buttonPanel.add(btnSearch);
         
@@ -124,11 +126,21 @@ public class ContactMain05 {
         // 테이블에서 선택된 행의 인덱스 찾음.
         int index = table.getSelectedRow();
         if (index == -1) { // 선택된 행이 없는 경우
-            // TODO 경고 메시지 다이얼로그 보여주기
+            JOptionPane.showMessageDialog(
+                    frame, 
+                    "업데이트하려는 행을 먼저 선택하세요...", 
+                    "경고", 
+                    JOptionPane.WARNING_MESSAGE);
+            
             return;
         }
         
-        ContactUpdateFrame.showContactUpdateFrame(frame, index);
+        ContactUpdateFrame.showContactUpdateFrame(frame, index, ContactMain05.this);
+    }
+    
+    public void notifyContactUpdated() {
+        resetTableModel();
+        JOptionPane.showMessageDialog(frame, "연락처 업데이트 성공!");
     }
 
     private void deleteContact() {

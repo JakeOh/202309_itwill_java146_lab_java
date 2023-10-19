@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import com.itwill.ver04.controller.ContactDaoImpl;
+import com.itwill.ver05.controller.ContactDaoImpl;
 import com.itwill.ver04.model.Contact;
 
 import java.awt.event.ActionListener;
