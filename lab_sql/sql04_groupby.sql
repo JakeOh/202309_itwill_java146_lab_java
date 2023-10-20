@@ -21,3 +21,36 @@ from emp;
 select comm, nvl(comm, -1), nvl2(comm, comm, -1) from emp;
 
 -- 다중 행 함수 예:
+-- count(컬럼): null이 아닌 행의 개수를 리턴.
+select count(empno), count(mgr), count(comm)
+from emp;
+
+select count(*) from emp; -- 테이블의 행의 개수
+
+-- 통계 함수: 합계, 평균, 최댓값, 최솟값, 분산, 표준편차
+select sum(sal), avg(sal), max(sal), min(sal), variance(sal), stddev(sal)
+from emp;
+
+-- 단일행 함수와 다중행 함수는 함께 select할 수 없음!
+-- select sal, sum(sal) from emp;
+-- select nvl(sal, 0), sum(sal) from emp;
+
+/*
+그룹별 쿼리:
+(예) 부서별 급여 평균, 부서별 인원수
+(문법)
+  select 컬럼, 함수 호출, ...
+  from 테이블
+  where 조건식(1)
+  group by 그룹별로 묶어줄 변수(컬럼), ...
+  having 조건식(2)
+  order by 정렬 기준 변수(컬럼), ...;
+*/
+
+-- 부서별 급여 평균
+select deptno, round(avg(sal), 2) as "AVG_SAL"
+from emp
+group by deptno
+order by deptno;
+
+
