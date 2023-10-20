@@ -109,3 +109,11 @@ select ename from emp where ename like 'A%';
 -- (1) %: 글자 수 제한 없음.
 -- (2) underscore(_): 밑줄이 있는 자리에 어떤 문자가 있어도 됨.
 select * from emp where job like '_LERK';
+
+-- 30번 부서에서 근무하고, 직무에 'SALES'를 포함하는 직원들의
+-- 사번, 이름, 급여, 수당, 부서번호, 직무를 출력.
+-- 정렬 순서: 사번.
+select empno, ename, sal, comm, deptno, job
+from emp
+where deptno = 30 and job like '%SALES%'
+order by empno;
