@@ -98,12 +98,43 @@ order by deptno;
 
 -- Ex. mgr 컬럼이 null이 아닌 직원들 중에서 부서별 급여 평균을 검색.
 -- 정렬순서: 부서번호 오름차순.
+select deptno, round(avg(sal), 2)
+from emp
+where mgr is not null
+group by deptno
+order by deptno;
+
+select * from emp where deptno = 10;
 
 -- Ex. 직무별 사원수를 검색. PRESIDENT는 검색 제외. 
 -- 직무별 사원수가 3명 이상인 직무만 검색.
 -- 정렬순서: 직무의 오름차순.
+select job, count(job)
+from emp
+where job != 'PRESIDENT'
+group by job
+having count(job) >= 3
+order by job;
+
+select job, count(job)
+from emp
+group by job
+having job != 'PRESIDENT' and count(job) >= 3
+order by job;
 
 -- Ex. 입사연도, 부서번호, 입사연도별 부서별 사원수 검색
 -- 1980년은 검색에서 제외.
 -- 연도별 부서별 사원수가 2명 이상인 경우만 선택.
 -- (1) 연도별, (2)부서별 오름차순 출력.
+select to_char(hiredate, 'YYYY') as "YEAR", deptno, count(*) as "COUNT"
+from emp
+where to_char(hiredate, 'YYYY') != '1980'
+group by to_char(hiredate, 'YYYY'), deptno
+having count(*) >= 2
+order by YEAR, deptno;
+
+select to_char(hiredate, 'YYYY') as "YEAR", deptno, count(*) as "COUNT"
+from emp
+group by to_char(hiredate, 'YYYY'), deptno
+having to_char(hiredate, 'YYYY') != '1980' and count(*) >= 2
+order by YEAR, deptno;
