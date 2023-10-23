@@ -157,3 +157,38 @@ create table ex3 (
     constraint ex3_gender_chck check (gender in ('M', 'F'))
 );
 
+-- foreign key(외래키): 다른 테이블의 고유키(primary key)를 참조하는 제약조건.
+-- 데이터를 insert할 때 다른 테이블의 PK에 없는 값이 insert되지 않도록 하기 위해서.
+-- 테이블을 생성할 때 FK를 설정하려면, PK가 있는 다른 테이블이 먼저 생성되어 있어야 함.
+
+create table ex_dept (
+    deptno  number(2)
+            constraint ex_dept_deptno_pk primary key,
+    dname   varchar2(100 char) not null
+);
+
+create table ex_emp1 (
+    empno   number(4)
+            constraint ex_emp1_empno_pk primary key,
+    ename   varchar2(100 char) not null,
+    deptno  number(2)
+            constraint ex_emp1_deptno_fk references ex_dept (deptno)
+);
+
+insert into ex_dept values (10, '아이티윌');
+insert into ex_emp1 values (1000, '오쌤', 10); -- FK 존재
+insert into ex_emp1 values (1001, '홍길동', 20); -- FK 위배
+
+select * from ex_dept;
+select * from ex_emp1;
+commit;
+
+create table ex_emp2 (
+    -- 컬럼 선언(이름 & 데이터 타입)
+    empno   number(4),
+    ename   varchar2(100 char) not null,
+    deptno  number(2),
+    -- 제약조건 선언
+    constraint ex_emp2_empno_pk primary key (empno),
+    constraint ex_emp2_deptno_fk foreign key (deptno) references ex_dept (deptno)
+);
