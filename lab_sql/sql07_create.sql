@@ -32,8 +32,6 @@ create table students (
     birthday date
 );
 
--- DESCRIBE students; -- describe
-
 /*
 테이블에 행 추가:
 insert into 테이블이름(컬럼, ...) values (값, ...);
@@ -53,4 +51,62 @@ select * from students;
 
 commit; -- insert한 내용들을 데이터베이스에 영구 저장.
 
+insert into students values (10, 'gildong');
+--> ORA-00947: 값의 수가 충분하지 않습니다
 
+insert into students (stuname, stuno) values ('gildong', 10);
+
+insert into students (stuname, stuno) values (100, 'gildong');
+--> ORA-01722: 수치가 부적합합니다
+
+insert into students (stuname) values ('abcdefghijk');
+--> ORA-12899: "SCOTT"."STUDENTS"."STUNAME" 열에 대한 값이 너무 큼(실제: 11, 최대값: 10)
+
+select * from students;
+commit;
+
+-- 테이블 생성할 때 기본값 설정하기:
+create table ex_users (
+    no number(4),
+    userid varchar2(20 byte),
+    password varchar2(100 byte),
+    age number(3) default 0,
+    created_date date default sysdate
+);
+
+insert into ex_users (no, userid, password)
+values (1, 'admin', '0000');
+--> insert할 때 기본값이 설정된 컬럼들은 insert하는 값이 없으면
+-- 설정된 기본값이 자동으로 insert됨.
+
+insert into ex_users (no, userid, age)
+values (2, 'guest', 10);
+--> password 컬럼은 기본값이 설정되어 있지 않기 때문에 null.
+
+select * from ex_users;
+
+-- 테이블을 생성할 때 제약조건(contraint) 만들기
+-- (1) primary key(고유키)
+-- (2) not null
+-- (3) unique
+-- (4) check
+-- (5) foreign key(외래키)
+
+create table ex1 (
+    id number(2) primary key,
+    name varchar2(10 char) not null,
+    phone varchar2(13 char) unique,
+    age number(3) check (age >= 0),
+    memo varchar2(1000 char)
+);
+
+insert into ex1
+values (1, '오쌤', '010-1234-5678', 16, '안녕하세요');
+
+insert into ex1 (id, name) values (1, '홍길동');
+--> 고유키(PK) 제약조건 위배: PK는 유일해야 함.
+
+insert into ex1 (name) values ('홍길동');
+--> PK 제약조거 위배: PK는 null이 될 수 없음.
+
+select * from ex1;
