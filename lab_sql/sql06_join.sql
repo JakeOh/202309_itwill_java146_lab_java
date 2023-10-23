@@ -112,14 +112,16 @@ select e1.ename as "직원 이름", e2.ename as "매니저 이름",
     e1.sal, s.grade
 from emp e1
     join emp e2 on e1.mgr = e2.empno
-    join salgrade s on e1.sal between s.losal and s.hisal;
+    join salgrade s on e1.sal between s.losal and s.hisal
+order by e2.ename, s.grade;
 
 select e1.ename as "직원 이름", e2.ename as "매니저 이름",
     e1.sal, s.grade
 from emp e1, emp e2, salgrade s
 where e1.mgr = e2.empno 
     and 
-    e1.sal between s.losal and s.hisal;
+    e1.sal between s.losal and s.hisal
+order by e2.ename, s.grade;
 
 -- ex3. 직원 이름, 부서 이름, 급여, 급여 등급을 검색.
 --   정렬 순서: (1)부서 이름, (2)급여 등급
