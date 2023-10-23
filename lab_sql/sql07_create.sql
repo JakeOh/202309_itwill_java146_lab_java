@@ -92,12 +92,13 @@ select * from ex_users;
 -- (4) check
 -- (5) foreign key(외래키)
 
+-- 테이블을 생성할 때 제약조건 만들기: 제약조건 이름을 설정하지 않음.
 create table ex1 (
-    id number(2) primary key,
-    name varchar2(10 char) not null,
-    phone varchar2(13 char) unique,
-    age number(3) check (age >= 0),
-    memo varchar2(1000 char)
+    id      number(2) primary key,
+    name    varchar2(10 char) not null,
+    phone   varchar2(13 char) unique,
+    age     number(3) check (age >= 0),
+    memo    varchar2(1000 char)
 );
 
 insert into ex1
@@ -107,6 +108,52 @@ insert into ex1 (id, name) values (1, '홍길동');
 --> 고유키(PK) 제약조건 위배: PK는 유일해야 함.
 
 insert into ex1 (name) values ('홍길동');
---> PK 제약조거 위배: PK는 null이 될 수 없음.
+--> PK 제약조건 위배: PK는 null이 될 수 없음.
+
+insert into ex1 (id, phone) values (2, '010-0000-0000');
+--> Not Null 제약조건 위배: name 컬럼은 NN.
+
+insert into ex1 (id, name, phone) values (2, '홍길동', '010-1234-5678');
+--> Unique 제약조건 위배: phone 컬럼은 unique.
+
+insert into ex1 (id, name, age) values (2, '홍길동', -1);
+--> Check 제약조건 위배: age >= 0
 
 select * from ex1;
+commit;
+
+-- 테이블을 생성할 때 제약조건 만들기: 제약조건 이름을 설정.
+create table ex2 (
+    id      number(4)
+            constraint ex2_id_pk primary key,
+    name    varchar2(10 char)
+            constraint ex2_name_nn not null,
+    phone   varchar2(13 char)
+            constraint ex2_phone_uq unique,
+    gender  varchar2(1 char)
+            constraint ex2_gender_chck check(gender in ('M', 'F'))
+);
+
+insert into ex2 values (1, '홍길동', '010-0000-0000', 'M');
+
+insert into ex2 (id, name) values (1, '홍길동'); --> PK 위배
+insert into ex2 (id) values (2); --> NN 위배
+insert into ex2 (id, name, gender) values (2, '홍길동', 'm'); --> check 위배
+
+select * from ex2;
+commit;
+
+-- 테이블을 생성할 때 제약조건 만들기: 컬럼 정의 따로, 제약조건 따로.
+create table ex3 (
+    -- 컬럼 정의(이름 & 데이터 타입)
+    id      number(4),
+    name    varchar2(10 char),
+    phone   varchar2(13 char),
+    gender  varchar2(1 char),
+    -- 제약조건 정의(제약조건 이름 & 내용)
+    constraint ex3_id_pk primary key (id),
+    constraint ex3_name_nn check (name is not null), -- 주의(not null)
+    constraint ex3_phone_uq unique (phone),
+    constraint ex3_gender_chck check (gender in ('M', 'F'))
+);
+
