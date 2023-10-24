@@ -65,3 +65,67 @@ select * from emp;
 rollback; -- 직전(최종) commit 상태로 되돌리기.
 
 select * from emp;
+
+-- 사번이 1004인 직원의 직무를 'MANAGER', 입사날짜를 '2023/10/24',
+-- 부서번호를 40으로 업데이트:
+update emp
+set job = 'MANAGER', hiredate = '2023/10/24', deptno = 40
+where empno = 1004;
+
+select * from emp where empno = 1004;
+
+-- 'ACCOUNTING' 부서에서 일하는 직원들의 급여를 10% 인상:
+update emp
+set sal = sal * 1.1
+where deptno = (
+    select deptno from dept where dname = 'ACCOUNTING'
+);
+
+select * from emp
+where deptno = (
+    select deptno from dept where dname = 'ACCOUNTING'
+);
+
+-- salgrade가 1인 직원들의 급여를 20% 인상:
+select losal, hisal from salgrade where grade = 1;
+
+update emp
+set sal = sal * 1.2
+where sal between
+    (select losal from salgrade where grade = 1)
+    and 
+    (select hisal from salgrade where grade = 1);
+
+select * from emp
+where sal between 
+    (select losal from salgrade where grade = 1)
+    and
+    (select hisal from salgrade where grade = 1);
+    
+commit;
+
+-- delete: 테이블에서 행을 삭제하는 DML
+-- delete from 테이블 [where 조건식];
+delete from emp; -- 테이블에서 전체 행을 삭제.
+
+rollback; -- 최종 커밋 상태(삭제 전)으로 되돌림.
+
+select * from emp;
+
+-- 사번이 1004인 직원 레코드(행)을 삭제:
+delete from emp where empno = 1004;
+
+commit;
+
+-- 1987년에 입사한 직원(들)을 삭제:
+select * from emp where to_char(hiredate, 'YYYY') = '1987';
+
+delete from emp where to_char(hiredate, 'YYYY') = '1987';
+
+rollback;
+
+delete from emp
+where hiredate between to_date('1987/01/01') 
+    and to_date('1987/12/31');
+
+select * from emp;
