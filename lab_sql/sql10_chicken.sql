@@ -1,6 +1,6 @@
 -- 치킨 주문 분석:
 
--- 1. https://github.com/JakeOh/20230228_itwill_java140_lab_java/blob/master/lab-oracle/call_chicken.csv
+-- 1. https://github.com/JakeOh/202309_itwill_java146_lab_java/blob/master/lab_sql/call_chicken.csv
 -- 파일의 내용을 저장할 수 있는 테이블을 생성하는 SQL 문을 작성하세요.
 -- CSV(comma-separated values) 파일:
 --   행의 데이터들을 쉼표(,)로 구분해서 표 형태의 데이터를 저장한 텍스트 파일.
