@@ -17,14 +17,56 @@ create table call_chicken (
 
 -- 2. SQLDeveloper에서 '데이터 임포트' 기능을 사용해서 CSV 파일의 내용을 테이블에 저장하세요.
 --> 접속 창 -> 계정(Scott) -> 테이블 -> CALL_CHICKEN -> 오른쪽 클릭 -> 데이터 임포트
+select * from call_chicken;
 
 -- 3. 통화건수의 최솟값, 최댓값을 찾으세요.
+select max(calls), min(calls) from call_chicken;
+
 -- 4. 통화건수가 최솟값이거나 최댓값인 레코드(행 전체)를 출력하세요.
+select * from call_chicken
+where calls = (select min(calls) from call_chicken)
+    or calls = (select max(calls) from call_chicken)
+order by calls;
+
 -- 5. 평균적으로 어떤 요일에서 치킨 주문이 많을까요?
+select call_day, round(avg(calls), 2) as "통화 평균"
+from call_chicken
+group by call_day
+order by "통화 평균" desc;
+
 -- 6. 평균적으로 어떤 연령대가 치킨 주문을 많이 할까요?
+select ages, round(avg(calls), 2) as "통화 평균"
+from call_chicken
+group by ages
+order by "통화 평균" desc;
+
 -- 7. 평균적으로 어느 지역에서 치킨 주문을 많이 할까요?
+select district, round(avg(calls), 2) as "통화 평균"
+from call_chicken
+group by district
+order by "통화 평균" desc;
+
 -- 8. 치킨 주문에 성별 차이가 있을까요?
+select gender, sum(calls), round(avg(calls), 2)
+from call_chicken
+group by gender;
+
 -- 9. 요일별, 연령대별 통화건수의 평균을 찾으세요.
+select call_day, ages, round(avg(calls), 2) as "AVG_CALLS"
+from call_chicken
+group by call_day, ages
+order by "AVG_CALLS" desc;
+
 -- 10. 구별, 성별 통화건수의 평균을 찾으세요.
+select district, gender, round(avg(calls), 2) as "AVG_CALLS"
+from call_chicken
+group by district, gender
+order by "AVG_CALLS" desc;
+
 -- 11. 요일별, 구별, 연령대별 통화건수의 평균을 찾으세요.
+select call_day, district, ages, round(avg(calls), 2) as "AVG_CALLS"
+from call_chicken
+group by call_day, district, ages
+order by "AVG_CALLS" desc;
+
 -- 3 ~ 11 문제의 출력은 통화건수 평균의 내림차순 정렬, 소숫점 2자리까지 반올림.
