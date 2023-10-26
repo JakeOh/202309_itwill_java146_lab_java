@@ -46,7 +46,7 @@ public class BlogDao {
     
     /**
      * 데이터베이스의 BLOGS 테이블에서 모든 레코드(행)를 검색해서 리스트를 리턴.
-     * 검색 결과는 블로그 포스트 번호의 내림차순으로 정렬.
+     * SQL_SELECT_ORDER_BY_ID 실행. 검색 결과는 블로그 포스트 번호의 내림차순으로 정렬.
      * 테이블에 행이 1개도 없는 경우에는 빈 리스트를 리턴.
      * 
      * @return 블로그들의 리스트.
@@ -123,6 +123,41 @@ public class BlogDao {
                 stmt.close();
                 conn.close();
             } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        return result;
+    }
+    
+    public static final String SQL_DELETE_BY_ID = 
+            "delete from BLOGS where ID = ?";
+    
+    /**
+     * 데이터베이스 BLOGS 테이블에서 글 번호(id)에 해당하는 레코드를 삭제.
+     * SQL_DELETE_BY_ID 문장을 실행. 삭제된 행의 개수를 리턴.
+     * 
+     * @param id 삭제하려는 포스트의 번호(ID). 테이블의 PK.
+     * @return 삭제 성공이면 1, 실패이면 0.
+     */
+    public int delete(Integer id) {
+        int result = 0;
+        
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        try {
+            conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            stmt = conn.prepareStatement(SQL_DELETE_BY_ID);
+            stmt.setInt(1, id);
+            result = stmt.executeUpdate();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                stmt.close();
+                conn.close();
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

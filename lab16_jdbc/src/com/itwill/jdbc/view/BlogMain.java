@@ -129,10 +129,40 @@ public class BlogMain {
         buttonPanel.add(btnDetails);
         
         btnDelete = new JButton("삭제");
+        btnDelete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                deleteBlogPost();
+            }
+        });
         btnDelete.setFont(new Font("D2Coding", Font.PLAIN, 28));
         buttonPanel.add(btnDelete);
     }
     
+    private void deleteBlogPost() {
+        int row = table.getSelectedRow(); // 테이블에서 선택된 행 인덱스.
+        if (row == -1) { // 선택된 행이 없는 경우
+            JOptionPane.showMessageDialog(frame, 
+                    "삭제하려는 행을 테이블에서 선택하세요.");
+            
+            return; // 메서드 종료
+        }
+        
+        int confirm = JOptionPane.showConfirmDialog(
+                frame, "정말 삭제할까요?", "삭제 확인", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            // 선택된 행에서 번호(id)를 찾음.
+            Integer id = (Integer) tableModel.getValueAt(row, 0);
+            // DAO(컨트롤로)의 메서드를 사용해서 DB에서 행을 삭제.
+            int result = dao.delete(id);
+            if (result == 1) {
+                // 삭제 성공하면 테이블 새로고침.
+                initTable();
+                JOptionPane.showMessageDialog(frame, "블로그 포스트 삭제 성공");
+            }
+        }
+    }
+
     private void initTable() {
         List<Blog> blogs = dao.read(); // DB에서 BLOGS 테이블 전체 검색
         
