@@ -125,6 +125,12 @@ public class BlogMain {
         buttonPanel.add(btnCreate);
         
         btnDetails = new JButton("상세보기");
+        btnDetails.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showBlogDetails();
+            }
+        });
         btnDetails.setFont(new Font("D2Coding", Font.PLAIN, 28));
         buttonPanel.add(btnDetails);
         
@@ -139,6 +145,23 @@ public class BlogMain {
         buttonPanel.add(btnDelete);
     }
     
+    private void showBlogDetails() {
+        // 테이블에서 선택된 행 인덱스
+        int row = table.getSelectedRow();
+        if (row == -1) { // 선택된 행이 없는 경우.
+            JOptionPane.showMessageDialog(frame, 
+                    "테이블에서 행을 먼저 선택하세요.");
+            
+            return;
+        }
+        
+        // 선택된 행(row)에서 글 번호(ID)를 찾음.
+        Integer id = (Integer) tableModel.getValueAt(row, 0);
+        
+        // 블로그 상세보기 프레임을 보여줌.
+        BlogDetailsFrame.showBlogDetailsFrame(frame, id);
+    }
+
     private void deleteBlogPost() {
         int row = table.getSelectedRow(); // 테이블에서 선택된 행 인덱스.
         if (row == -1) { // 선택된 행이 없는 경우

@@ -41,6 +41,19 @@ public class BlogDao {
     }
     //----- singleton -----
     
+    private Blog makeBlogFromResultSet(ResultSet rs) throws SQLException {
+        int id = rs.getInt("ID");
+        String title = rs.getString("TITLE");
+        String content = rs.getString("CONTENT");
+        String author = rs.getString("AUTHOR");
+        LocalDateTime created = rs.getTimestamp("CREATED_TIME").toLocalDateTime();
+        LocalDateTime modified = rs.getTimestamp("MODIFIED_TIME").toLocalDateTime();
+        
+        Blog blog = new Blog(id, title, content, author, created, modified);
+        
+        return blog;
+    }
+    
     public static final String SQL_SELECT_ORDER_BY_ID = 
             "select * from BLOGS order by ID desc";
     
@@ -67,14 +80,7 @@ public class BlogDao {
             
             // 결과 처리
             while (rs.next()) {
-                int id = rs.getInt("ID");
-                String title = rs.getString("TITLE");
-                String content = rs.getString("CONTENT");
-                String author = rs.getString("AUTHOR");
-                LocalDateTime created = rs.getTimestamp("CREATED_TIME").toLocalDateTime();
-                LocalDateTime modified = rs.getTimestamp("MODIFIED_TIME").toLocalDateTime();
-                
-                Blog blog = new Blog(id, title, content, author, created, modified);
+                Blog blog = makeBlogFromResultSet(rs);
                 result.add(blog);
             }
             
@@ -163,6 +169,37 @@ public class BlogDao {
         }
         
         return result;
+    }
+    
+    public static final String SQL_SELECT_BY_ID = "select * from BLOGS where ID = ?";
+    
+    /**
+     * 블로그 포스트 아이디(글 번호)로 검색해서 그 결과를 리턴.
+     * SQL_SELECT_BY_ID 문장을 실행.
+     * 
+     * @param id 테이블에서 검색할 때 사용할 아이디(PK).
+     * @return 검색 결과가 있으면 null이 아닌 Blog 타입 객체, 검색 결과가 없으면 null.
+     */
+    public Blog read(Integer id) {
+        Blog blog = null;
+        
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            stmt = conn.prepareStatement(SQL_SELECT_BY_ID);
+            stmt.setInt(1, id);
+            rs = stmt.executeQuery();
+            if (rs.next()) { // 검색 결과가 있으면(PK에 해당하는 레코드가 있으면)
+                blog = makeBlogFromResultSet(rs);
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return blog;
     }
     
 }
