@@ -17,6 +17,8 @@ import javax.swing.table.DefaultTableModel;
 
 import com.itwill.jdbc.controller.BlogDao;
 import com.itwill.jdbc.model.Blog;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class BlogMain {
     public static final String[] COLUMN_NAMES = {"번호", "제목", "작성자", "작성시간"};
@@ -65,6 +67,7 @@ public class BlogMain {
      */
     private void initialize() {
         frame = new JFrame();
+        frame.setTitle("블로그 메인");
         frame.setBounds(100, 100, 807, 550);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
@@ -100,6 +103,12 @@ public class BlogMain {
         frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
         
         btnCreate = new JButton("새 포스트 작성");
+        btnCreate.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                BlogCreateFrame.showBlogCreateFrame(frame);
+            }
+        });
         btnCreate.setFont(new Font("D2Coding", Font.PLAIN, 28));
         buttonPanel.add(btnCreate);
         
