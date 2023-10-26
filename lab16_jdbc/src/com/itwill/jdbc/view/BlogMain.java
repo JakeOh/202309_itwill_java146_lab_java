@@ -94,7 +94,17 @@ public class BlogMain {
         scrollPane = new JScrollPane();
         frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
         
-        table = new JTable();
+        table = new JTable() { // 익명 클래스
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // 테이블 셀 편집 불가
+            }
+        };
+        
+        table.getTableHeader().setFont(new Font("D2Coding", Font.PLAIN, 28));
+        table.setFont(new Font("D2Coding", Font.PLAIN, 28));
+        table.setRowHeight(40);
+        
         tableModel = new DefaultTableModel(null, COLUMN_NAMES);
         table.setModel(tableModel);
         scrollPane.setViewportView(table);
