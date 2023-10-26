@@ -121,7 +121,7 @@ public class BlogMain {
                     b.getId(),
                     b.getTitle(),
                     b.getAuthor(),
-                    b.getClass()
+                    b.getCreatedTime()
             };
             tableModel.addRow(row);
         }
