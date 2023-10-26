@@ -9,6 +9,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -94,6 +95,7 @@ public class BlogMain {
         scrollPane = new JScrollPane();
         frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
         
+//        table = new JTable();
         table = new JTable() { // 익명 클래스
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -116,7 +118,7 @@ public class BlogMain {
         btnCreate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                BlogCreateFrame.showBlogCreateFrame(frame);
+                BlogCreateFrame.showBlogCreateFrame(frame, BlogMain.this);
             }
         });
         btnCreate.setFont(new Font("D2Coding", Font.PLAIN, 28));
@@ -146,6 +148,11 @@ public class BlogMain {
         }
         table.setModel(tableModel); // 테이블에 모델을 다시 세팅.
         
+    }
+    
+    public void notifyBlogCreated() {
+        initTable();
+        JOptionPane.showMessageDialog(frame, "새 포스트 등록 성공");
     }
 
 }

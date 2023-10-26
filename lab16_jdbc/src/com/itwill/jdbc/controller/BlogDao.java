@@ -1,5 +1,9 @@
 package com.itwill.jdbc.controller;
 
+import static com.itwill.jdbc.OracleJdbc.PASSWORD;
+import static com.itwill.jdbc.OracleJdbc.URL;
+import static com.itwill.jdbc.OracleJdbc.USER;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -12,8 +16,6 @@ import java.util.List;
 import com.itwill.jdbc.model.Blog;
 
 import oracle.jdbc.OracleDriver;
-
-import static com.itwill.jdbc.OracleJdbc.*;
 
 // MVC 아키텍쳐에서 Controller에 해당하는 클래스: 
 // DB CRUD(Create, Read, Update, Delete) : select, insert, update, delete
@@ -91,4 +93,41 @@ public class BlogDao {
         
         return result;
     }
+    
+    public static final String SQL_INSERT = 
+            "insert into BLOGS (TITLE, CONTENT, AUTHOR) values (?, ?, ?)";
+    
+    /**
+     * 데이터베이스의 BLOGS 테이블에 행을 삽입(insert). SQL_INSERT를 실행.
+     * 
+     * @param blog 테이블에 insert할 제목(title), 내용(content), 작성자(author) 값을 저장한 객체.
+     * @return 테이블에 삽입된 행의 개수.
+     */
+    public int create(Blog blog) {
+        int result = 0;
+        
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        try {
+            conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            stmt = conn.prepareStatement(SQL_INSERT);
+            stmt.setString(1, blog.getTitle());
+            stmt.setString(2, blog.getContent());
+            stmt.setString(3, blog.getAuthor());
+            result = stmt.executeUpdate();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                stmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        return result;
+    }
+    
 }

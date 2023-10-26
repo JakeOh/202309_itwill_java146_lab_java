@@ -8,8 +8,11 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import com.itwill.jdbc.controller.BlogDao;
+import com.itwill.jdbc.model.Blog;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
@@ -33,15 +36,16 @@ public class BlogCreateFrame extends JFrame {
 
     private BlogDao dao;
     private Component parent;
+    private BlogMain app;
     
     /**
      * Launch the application.
      */
-    public static void showBlogCreateFrame(Component parent) {
+    public static void showBlogCreateFrame(Component parent, BlogMain app) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    BlogCreateFrame frame = new BlogCreateFrame(parent);
+                    BlogCreateFrame frame = new BlogCreateFrame(parent, app);
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -51,10 +55,11 @@ public class BlogCreateFrame extends JFrame {
     }
 
     // 생성자
-    public BlogCreateFrame(Component parent) {
+    public BlogCreateFrame(Component parent, BlogMain app) {
         // 필드 초기화.
         this.dao = BlogDao.getInstance();
         this.parent = parent;
+        this.app = app;
         
         // UI 컴포넌트들 초기화.
         initialize();
@@ -117,6 +122,12 @@ public class BlogCreateFrame extends JFrame {
         contentPane.add(textAuthor);
         
         btnSave = new JButton("저장");
+        btnSave.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                createNewBlogPost();
+            }
+        });
         btnSave.setFont(new Font("D2Coding", Font.PLAIN, 28));
         btnSave.setBounds(12, 588, 178, 64);
         contentPane.add(btnSave);
@@ -127,4 +138,28 @@ public class BlogCreateFrame extends JFrame {
         btnCancel.setBounds(251, 588, 178, 64);
         contentPane.add(btnCancel);
     }
+
+    private void createNewBlogPost() {
+        // 제목, 내용, 작성자에 입력된 내용을 읽고, Blog 객체를 생성해서, 
+        // DAO 메서드(create)를 사용해서 DB에 삽입(insert).
+        
+        String title = textTitle.getText();
+        String content = textContent.getText();
+        String author = textAuthor.getText();
+        if (title.equals("") || content.equals("") || author.equals("")) {
+            JOptionPane.showMessageDialog(BlogCreateFrame.this, 
+                    "제목, 내용, 작성자는 반드시 입력되어야 합니다.");
+            
+            return;
+        }
+        
+        Blog blog = new Blog(null, title, content, author, null, null);
+        int result = dao.create(blog);
+        // DB insert 성공하면 메인 프레임에게 알려줌 -> 메인 프레임에서 테이블을 새로고침.
+        if (result == 1) {
+            dispose(); // 현재 창 닫기
+            app.notifyBlogCreated(); // 메인 프레임에게 알려줌.
+        }
+    }
+    
 }
