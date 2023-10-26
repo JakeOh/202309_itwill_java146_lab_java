@@ -9,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,23 @@ public class BlogDao {
         return instance;
     }
     //----- singleton -----
+    private void closeResources(Connection conn, Statement stmt, ResultSet rs) {
+        try {
+            rs.close();
+            closeResources(conn, stmt);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void closeResources(Connection conn, Statement stmt) {
+        try {
+            stmt.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     
     private Blog makeBlogFromResultSet(ResultSet rs) throws SQLException {
         int id = rs.getInt("ID");
@@ -88,13 +106,7 @@ public class BlogDao {
             e.printStackTrace();
         } finally {
             // 리소스 해제
-            try {
-                rs.close();
-                stmt.close();
-                conn.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            closeResources(conn, stmt, rs);
         }
         
         return result;
@@ -125,12 +137,7 @@ public class BlogDao {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            try {
-                stmt.close();
-                conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            closeResources(conn, stmt);
         }
         
         return result;
@@ -160,12 +167,7 @@ public class BlogDao {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            try {
-                stmt.close();
-                conn.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            closeResources(conn, stmt);
         }
         
         return result;
@@ -198,16 +200,121 @@ public class BlogDao {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                rs.close();
-                stmt.close();
-                conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            closeResources(conn, stmt, rs);
         }
         
         return blog;
+    }
+    
+    public static final String SQL_UPDATE = 
+            "update BLOGS set TITLE = ?, CONTENT = ?, MODIFIED_TIME = systimestamp where ID = ?";
+    
+    /**
+     * 데이터베이스 테이블 BLOGS에서 제목(title), 내용(content)을 업데이트.
+     * 업데이트할 때 modified_time 컬럼은 시스템의 현재 시간으로 업데이트.
+     * SQL_UPDATE 문장을 실행하고 그 결과를 리턴.
+     * 
+     * @param blog 업데이트할 포스트의 아이디(id), 제목(title), 내용(content)를 가지고 있는 객체.
+     * @return 업데이트 성공하면 1, 실패하면 0.
+     */
+    public int update(Blog blog) {
+        int result = 0;
+        
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        try {
+            conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            stmt = conn.prepareStatement(SQL_UPDATE);
+            stmt.setString(1, blog.getTitle());
+            stmt.setString(2, blog.getContent());
+            stmt.setInt(3, blog.getId());
+            result = stmt.executeUpdate();
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeResources(conn, stmt);
+        }
+        
+        return result;
+    }
+    
+    // 제목에 검색 키워드가 포함된 모든 결과를 검색.
+    public static final String SQL_SELECT_BY_TITLE = 
+            "select * from BLOGS "
+            + "where lower(TITLE) like ? "
+            + "order by ID desc";
+    
+    // 내용(컨텐트)에 검색 키워드가 포함된 모든 결과를 검색.
+    public static final String SQL_SELECT_BY_CONTENT = 
+            "select * from BLOGS "
+            + "where lower(CONTENT) like ? "
+            + "order by ID desc";
+    
+    // 제목 또는 내용에 검색 키워드가 포함된 모든 결과를 검색.
+    public static final String SQL_SELECT_BY_TITLE_OR_CONTENT = 
+            "select * from BLOGS "
+            + "where lower(TITLE) like ? or lower(CONTENT) like ? "
+            + "order by ID desc";
+    
+    // 작성자에 검색 키워드가 포함된 모든 결과를 검색.
+    public static final String SQL_SELECT_BY_AUTHOR = 
+            "select * from BLOGS "
+            + "where lower(AUTHOR) like ? "
+            + "order by ID desc";
+    
+    /**
+     * 검색 타입에 따라서 SQL_SELECT_BY_TITLE, SQL_SELECT_BY_CONTENT,
+     * SQL_SELECT_BY_TITLE_OR_CONTENT, 또는 SQL_SELECT_BY_AUTHOR 문장을 실행하고,
+     * 그 결과를 리스트로 리턴.
+     * 
+     * @param searchType 0-제목 검색, 1-내용 검색, 2-제목 또는 내용 검색, 3-작성자 검색.
+     * @param keyword 검색어.
+     * @return 검색 결과 리스트. 검색 결과가 없는 경우에는 빈 리스트.
+     */
+    public List<Blog> search(int searchType, String keyword) {
+        final String searchKeyword = "%" + keyword.toLowerCase() + "%";
+        
+        List<Blog> result = new ArrayList<>();
+        
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            switch (searchType) {
+            case 0:
+                stmt = conn.prepareStatement(SQL_SELECT_BY_TITLE);
+                stmt.setString(1, searchKeyword);
+                break;
+            case 1:
+                stmt = conn.prepareStatement(SQL_SELECT_BY_CONTENT);
+                stmt.setString(1, searchKeyword);
+                break;
+            case 2:
+                stmt = conn.prepareStatement(SQL_SELECT_BY_TITLE_OR_CONTENT);
+                stmt.setString(1, searchKeyword);
+                stmt.setString(2, searchKeyword);
+                break;
+            case 3:
+                stmt = conn.prepareStatement(SQL_SELECT_BY_AUTHOR);
+                stmt.setString(1, searchKeyword);
+                break;
+            }
+            
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                Blog b = makeBlogFromResultSet(rs);
+                result.add(b);
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeResources(conn, stmt, rs);
+        }
+        
+        return result;
     }
     
 }
