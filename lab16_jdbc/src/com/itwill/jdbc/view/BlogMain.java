@@ -1,19 +1,26 @@
 package com.itwill.jdbc.view;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.util.List;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import java.awt.BorderLayout;
 import javax.swing.JScrollPane;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import java.awt.Font;
+import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.JButton;
+import javax.swing.table.DefaultTableModel;
+
+import com.itwill.jdbc.controller.BlogDao;
+import com.itwill.jdbc.model.Blog;
 
 public class BlogMain {
-
+    public static final String[] COLUMN_NAMES = {"번호", "제목", "작성자", "작성시간"};
+    
     private JFrame frame;
     private JPanel searchPanel;
     private JScrollPane scrollPane;
@@ -21,6 +28,13 @@ public class BlogMain {
     private JComboBox<String> comboBox;
     private JTextField textSearchKeyword;
     private JButton btnSearch;
+    private JTable table;
+    private DefaultTableModel tableModel;
+    private JButton btnCreate;
+    private JButton btnDetails;
+    private JButton btnDelete;
+    
+    private BlogDao dao = BlogDao.getInstance();
 
     /**
      * Launch the application.
@@ -42,7 +56,8 @@ public class BlogMain {
      * Create the application.
      */
     public BlogMain() {
-        initialize();
+        initialize(); // UI 컴포넌트들 초기화
+        initTable(); // 테이블 데이터 초기화
     }
 
     /**
@@ -76,8 +91,42 @@ public class BlogMain {
         scrollPane = new JScrollPane();
         frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
         
+        table = new JTable();
+        tableModel = new DefaultTableModel(null, COLUMN_NAMES);
+        table.setModel(tableModel);
+        scrollPane.setViewportView(table);
+        
         buttonPanel = new JPanel();
         frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+        
+        btnCreate = new JButton("새 포스트 작성");
+        btnCreate.setFont(new Font("D2Coding", Font.PLAIN, 28));
+        buttonPanel.add(btnCreate);
+        
+        btnDetails = new JButton("상세보기");
+        btnDetails.setFont(new Font("D2Coding", Font.PLAIN, 28));
+        buttonPanel.add(btnDetails);
+        
+        btnDelete = new JButton("삭제");
+        btnDelete.setFont(new Font("D2Coding", Font.PLAIN, 28));
+        buttonPanel.add(btnDelete);
+    }
+    
+    private void initTable() {
+        List<Blog> blogs = dao.read(); // DB에서 BLOGS 테이블 전체 검색
+        
+        tableModel = new DefaultTableModel(null, COLUMN_NAMES); // 테이블모델 리셋(초기화)
+        for (Blog b : blogs) { // DB에서 검색한 내용으로 테이블의 행들을 만듦.
+            Object[] row = {
+                    b.getId(),
+                    b.getTitle(),
+                    b.getAuthor(),
+                    b.getClass()
+            };
+            tableModel.addRow(row);
+        }
+        table.setModel(tableModel); // 테이블에 모델을 다시 세팅.
+        
     }
 
 }
