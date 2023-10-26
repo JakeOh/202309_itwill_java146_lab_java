@@ -7,6 +7,7 @@ import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -15,6 +16,8 @@ import javax.swing.border.EmptyBorder;
 
 import com.itwill.jdbc.controller.BlogDao;
 import com.itwill.jdbc.model.Blog;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class BlogDetailsFrame extends JFrame {
 
@@ -38,15 +41,16 @@ public class BlogDetailsFrame extends JFrame {
     private BlogDao dao;
     private Component parent;
     private Integer id;
+    private BlogMain app;
     
     /**
      * Launch the application.
      */
-    public static void showBlogDetailsFrame(Component parent, Integer id) {
+    public static void showBlogDetailsFrame(Component parent, Integer id, BlogMain app) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    BlogDetailsFrame frame = new BlogDetailsFrame(parent, id);
+                    BlogDetailsFrame frame = new BlogDetailsFrame(parent, id, app);
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -56,11 +60,12 @@ public class BlogDetailsFrame extends JFrame {
     }
 
     // 생성자
-    public BlogDetailsFrame(Component parent, Integer id) {
+    public BlogDetailsFrame(Component parent, Integer id, BlogMain app) {
         // 필드 초기화
         this.dao = BlogDao.getInstance();
         this.parent = parent;
         this.id = id;
+        this.app = app;
         
         // UI 컴포넌트들 초기화.
         initialize();
@@ -163,6 +168,12 @@ public class BlogDetailsFrame extends JFrame {
         contentPane.add(textModified);
         
         btnUpdate = new JButton("업데이트");
+        btnUpdate.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateBlogPost();
+            }
+        });
         btnUpdate.setFont(new Font("D2Coding", Font.PLAIN, 28));
         btnUpdate.setBounds(12, 631, 216, 64);
         contentPane.add(btnUpdate);
@@ -174,6 +185,25 @@ public class BlogDetailsFrame extends JFrame {
         contentPane.add(btnClose);
     }
     
+    private void updateBlogPost() {
+        Integer id = Integer.parseInt(textId.getText());
+        String title = textTitle.getText();
+        String content = textContent.getText();
+        if (title.equals("") || content.equals("")) {
+            JOptionPane.showMessageDialog(BlogDetailsFrame.this, 
+                    "제목과 내용은 반드시 입력하세요.");
+            
+            return;
+        }
+        
+        Blog blog = new Blog(id, title, content, null, null, null);
+        int result = dao.update(blog);
+        if (result == 1) {
+            dispose();
+            app.notifyBlogUpdated();
+        }
+    }
+
     private void initBlogDetails() {
         // DAO(컨트롤러) 메서드를 사용해서 DB에서 검색하고, 그 결과를 보여줌.
         Blog blog = dao.read(id);

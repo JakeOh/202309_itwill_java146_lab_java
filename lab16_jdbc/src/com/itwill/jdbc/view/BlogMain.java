@@ -38,6 +38,7 @@ public class BlogMain {
     private JButton btnDelete;
     
     private BlogDao dao = BlogDao.getInstance();
+    private JButton btnReadAll;
 
     /**
      * Launch the application.
@@ -89,6 +90,12 @@ public class BlogMain {
         textSearchKeyword.setColumns(20);
         
         btnSearch = new JButton("검색");
+        btnSearch.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                searchByKeyword();
+            }
+        });
         btnSearch.setFont(new Font("D2Coding", Font.PLAIN, 28));
         searchPanel.add(btnSearch);
         
@@ -121,6 +128,16 @@ public class BlogMain {
                 BlogCreateFrame.showBlogCreateFrame(frame, BlogMain.this);
             }
         });
+        
+        btnReadAll = new JButton("전체목록");
+        btnReadAll.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                initTable();
+            }
+        });
+        btnReadAll.setFont(new Font("D2Coding", Font.PLAIN, 28));
+        buttonPanel.add(btnReadAll);
         btnCreate.setFont(new Font("D2Coding", Font.PLAIN, 28));
         buttonPanel.add(btnCreate);
         
@@ -145,6 +162,21 @@ public class BlogMain {
         buttonPanel.add(btnDelete);
     }
     
+    private void searchByKeyword() {
+        int type = comboBox.getSelectedIndex();
+        String keyword = textSearchKeyword.getText();
+        if (keyword.equals("")) {
+            JOptionPane.showMessageDialog(frame, "검색어를 입력하세요.");
+            textSearchKeyword.requestFocus();
+            
+            return;
+        }
+        
+        List<Blog> result = dao.search(type, keyword);
+        resetTableModel(result);
+        
+    }
+    
     private void showBlogDetails() {
         // 테이블에서 선택된 행 인덱스
         int row = table.getSelectedRow();
@@ -159,7 +191,7 @@ public class BlogMain {
         Integer id = (Integer) tableModel.getValueAt(row, 0);
         
         // 블로그 상세보기 프레임을 보여줌.
-        BlogDetailsFrame.showBlogDetailsFrame(frame, id);
+        BlogDetailsFrame.showBlogDetailsFrame(frame, id, BlogMain.this);
     }
 
     private void deleteBlogPost() {
@@ -186,11 +218,9 @@ public class BlogMain {
         }
     }
 
-    private void initTable() {
-        List<Blog> blogs = dao.read(); // DB에서 BLOGS 테이블 전체 검색
-        
+    private void resetTableModel(List<Blog> list) {
         tableModel = new DefaultTableModel(null, COLUMN_NAMES); // 테이블모델 리셋(초기화)
-        for (Blog b : blogs) { // DB에서 검색한 내용으로 테이블의 행들을 만듦.
+        for (Blog b : list) { // DB에서 검색한 내용으로 테이블의 행들을 만듦.
             Object[] row = {
                     b.getId(),
                     b.getTitle(),
@@ -200,12 +230,21 @@ public class BlogMain {
             tableModel.addRow(row);
         }
         table.setModel(tableModel); // 테이블에 모델을 다시 세팅.
-        
+    }
+    
+    private void initTable() {
+        List<Blog> blogs = dao.read(); // DB에서 BLOGS 테이블 전체 검색
+        resetTableModel(blogs);
     }
     
     public void notifyBlogCreated() {
         initTable();
         JOptionPane.showMessageDialog(frame, "새 포스트 등록 성공");
+    }
+    
+    public void notifyBlogUpdated() {
+        initTable();
+        JOptionPane.showMessageDialog(frame, "포스트 업데이트 성공");
     }
 
 }
